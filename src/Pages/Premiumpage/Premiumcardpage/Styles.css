@@ -1,0 +1,44 @@
+.cardheader {
+
+    border: solid 2px #12D9A8;
+    height: 52px;
+    width: 80%;
+    margin-top: -25px;
+    background-color: #fff;
+    border-radius: 20%;
+    z-index: 999;
+    color: azure;
+    align-self: center;
+
+}
+.prem_card_btn {
+    padding: 8px 25px;
+    border-radius: 30px;
+    background: #2aaea1;
+    border-color: #2aaea1;
+}
+
+
+.shapestyle {
+    width: 100%;
+    height: 260px;
+    background-color: rgba(6, 199, 180, 0.3);
+    /* border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px; */
+    border-radius: 20px;
+    margin-top: -28px;
+}
+
+.shapestyle2 {
+    width: 100%;
+    height: 260px;
+    background-color: #2AAEA1;
+    /* border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px; */
+    margin-top: -32px;
+    border-radius: 20px;
+}
+
+
+
+

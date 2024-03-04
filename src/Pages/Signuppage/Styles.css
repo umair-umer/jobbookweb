@@ -1,0 +1,86 @@
+.mainconsignup{
+   
+    margin-top:150px;
+ 
+}
+
+.inp{
+
+      border: solid 2px #4E8871;
+}
+
+
+.singinbtn{
+
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+
+}
+
+.cdimg{
+    background-color:#82DFC0;
+    border:none;
+    height:700px;
+    
+}
+
+.mainDiv{
+
+     background-color: #fff;
+     box-shadow: 1px 2px 9px #e1e1e1;
+}
+
+.loginwith{
+
+      display: flex;
+      flex-direction: row;
+}
+
+
+.iconstyle{
+
+       width:40px;
+       border-radius: 50%
+    }
+
+
+.card-no-border-radius {
+        border-radius: 0;
+        border: none;
+      }
+
+      .main-no-box-shadow {
+          box-shadow: none;
+        }
+      
+        .main-no-border {
+          border: none;
+        }
+
+        .img-no-border {
+          border: none;
+        }
+
+@media only screen and (max-width: 600px) {
+   .cdimg{
+
+       height: auto;
+   }
+     .mainconsignup{
+          
+          margin-top: 0px;
+     }
+     .inp{
+
+          width: 100%;
+          height: 20%;
+     }
+
+     .iconstyle{
+
+          width:50px;
+          height: 50px;
+     }
+  }

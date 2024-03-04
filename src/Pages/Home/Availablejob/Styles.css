@@ -1,0 +1,185 @@
+.buttoncon {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -50px;
+
+}
+
+.crdbdy {
+
+  width: 400px;
+  height: 200px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 2px 9px #e1e1e1;
+  border-radius: 20px;
+}
+
+.crdbdy:hover {
+  color: #ffffff;
+}
+
+.save {
+
+  width: 80px;
+  /* height: 35px; */
+  border: solid 1px #18BBAB;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  color: #34988f;
+  box-shadow: 1px 2px 9px #e1e1e1;
+  padding: 5px 0 7px;
+}
+
+.save:hover {
+
+  border: solid 0.1px #005049;
+  color: #ffffff;
+}
+
+.apply {
+
+  width: 130px;
+  height: 36px;
+  background-color: #18BBAB;
+  border: none;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  color: #ffffff;
+  box-shadow: 1px 2px 9px #e1e1e1;
+
+}
+
+.crdbdy {
+  display: "flex";
+  flex-direction: column;
+  position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.maincardcon {
+
+  display: "flex";
+  flex-direction: "row";
+  align-items: "center"
+}
+
+.imagecon {
+
+  width: "40px";
+  height: "40px";
+  border-radius: "50%"
+}
+
+.countercon {
+  display: "flex";
+  flex-direction: "row"
+}
+
+.tittle {
+  font-size: 15;
+  font-weight: "bold";
+  padding: 10
+}
+
+.mnage {
+  margin-left: "150px"
+}
+
+.logoimage {
+  display: "flex";
+  flex-direction: "row";
+  margin-top: "-20px";
+  margin-left: "12%"
+}
+
+.recent {
+  width: 80px;
+  /* height: 35px; */
+  border: none;
+  background-color: #18BBAB;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  color: #ffffff;
+  box-shadow: 1px 2px 9px #e1e1e1;
+
+
+}
+
+.popular {
+
+  width: 80px;
+  /* height: 35px; */
+  border: solid 1px #18BBAB;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  color: #18BBAB;
+  box-shadow: 1px 2px 9px #e1e1e1;
+
+}
+
+@media only screen and (max-width: 600px) {
+  .container-fluid.buttoncon {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recent-buttons {
+    margin-top: 10px;
+  }
+
+  .card.crdbdy {
+    width: 300px;
+  }
+
+  .maincardcon {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mnage {
+    margin-left: 0;
+  }
+
+  .save {
+
+    width: 80px;
+    /* height: 35px; */
+    border: solid 1px #18BBAB;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    color: #18BBAB;
+    box-shadow: 1px 2px 9px #e1e1e1;
+    margin-left: -80px;
+  }
+}
+
+.crdbdy:after {
+  content: "";
+  background: #18BBAB;
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  left: 0;
+  top: 0;
+  border-radius: 18px;
+  z-index: -2;
+  transition: .5s;
+}
+
+.crdbdy:hover:after {
+  height:100%;
+}
+.crdbdy:hover .save {
+  color: #fff;
+}

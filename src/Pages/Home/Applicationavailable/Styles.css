@@ -1,0 +1,54 @@
+.image {
+  height: 20%;
+}
+
+.googlebutton {
+  width: 180px;
+  background-color: "#C3EEE9"
+}
+
+@media only screen and (max-width: 600px) {
+  .image {
+    height: auto;
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .playstorebutton {
+
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+  .googlebutton {
+    width: 130px;
+    background-color: "#C3EEE9";
+    justify-content: center;
+  }
+}
+
+.playstorebutton a {
+  animation: heartBeat infinite;
+  animation-duration: 6s;
+}
+
+.rotat_img {
+  animation: animName 5s linear infinite;
+}
+
+@keyframes animName {
+  0% {
+    transform: rotatey(0deg);
+  }
+
+  50% {
+    transform: rotatey(360deg);
+  }
+
+  100% {
+    transform: rotatex(360deg);
+  }
+}

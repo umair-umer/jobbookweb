@@ -1,0 +1,39 @@
+.apply1{
+
+    width: 130px;
+    height: 36px;
+    background-color:  #005049;
+    border: none;
+    border-radius: 30px;
+    align-items: center;
+    justify-content:center;
+    margin-left: 10px;
+    color: #ffffff;
+    box-shadow: 1px 2px 9px #e1e1e1;
+
+}
+.platform img {
+    animation: tada infinite;
+    animation-duration: 5s;
+}
+
+
+.platform{
+
+    width:"80%";
+    background-color:#0DC3B1;
+    border-bottom-left-radius: 60px;
+    border-top-left-radius:60px ;
+    /* borderBottomLeftRadius:"60px",borderTopLeftRadius:"60px" */
+}
+
+@media only screen and (max-width: 600px) {
+
+
+    .platform{
+     
+        /* width: 100%; */
+        background-color: #0DC3B1;
+  }
+
+}

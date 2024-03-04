@@ -1,0 +1,28 @@
+.post_bottom_box ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.post_bottom_box {
+    background: #E9E9E9;
+    padding: 25px 0 10px;
+    border-radius: 0px 0px 25px 25px;
+}
+
+.post_bottom_box a {
+    text-decoration: none;
+    color: #2D5B57;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post_bottom_box img {
+    color: #2D5B57;
+    width: 35px;
+}
