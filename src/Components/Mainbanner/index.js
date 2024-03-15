@@ -32,7 +32,7 @@ function MainBanner() {
       <div className="card main">
         <div className="container">
           <div className="row align-items-center">
-            <div className="col-sm-6 mb-3 mb-sm-0 " style={{ marginTop: 95 }}>
+            <div className="col-sm-6 mb-3 mb-sm-0 " style={{ marginTop: 85 }}>
               <div className="card-body ">
                 <h1
                   className="card-title big  rotate-on-hover"

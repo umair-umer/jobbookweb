@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../../../Components/Loader";
-import IMG from "../../../Assests/softwarecompanylogo.png";
 import { Imagebaseurl, baseurl } from "../../../Config/utilites";
+import ModalComponent from "../../../Components/Createpostmodal";
+import { useParams } from 'react-router-dom';
 
 function PostJobContentHere() {
   const [jobsData, setJobsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentJobDetails, setCurrentJobDetails] = useState(null);
 
+
+  const toggleModal = () => setIsOpen(!isOpen);
+
+  const { jobId } = useParams();
   useEffect(() => {
     const fetchJobs = async () => {
       setIsLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
       const userType = localStorage.getItem("userType");
-
+      console.log("type",userType)
+;
       const baseURL =
         userType === "company"
           ? `${baseurl}/company/home/jobs`
@@ -43,6 +51,33 @@ function PostJobContentHere() {
     console.log("Job clicked", job);
     // Implement your logic here
   };
+
+
+
+  const handleViewDetailClick = async (jobId) => {
+    // const token = localStorage.getItem("token");
+    //   const userType = localStorage.getItem("userType");
+    // setIsLoading(true);
+    // const baseURL =
+    // userType === "company"
+    //   ? `${baseurl}/company/home/stats/${jobId}`
+    //   : `${baseurl}/talent/home/jobs`;
+    // try {
+    //   const response = await axios.get(`${baseURL}`,{
+    //     headers: {
+    //       "Authorization": `Bearer ${token}`,
+    //     },
+    //   });
+    //   setCurrentJobDetails(response.data);
+    //   setIsOpen(true); // Show the modal after data is fetched
+    // } catch (error) {
+    //   console.error("Failed to fetch job details:", error);
+    //   setError(error.toString());
+    // } finally {
+    //   setIsLoading(false);
+    // }
+  };
+
 
   if (isLoading) {
     return <Loader />;
@@ -78,8 +113,9 @@ function PostJobContentHere() {
                     src={`${Imagebaseurl}${job.user.picture}`}
                     className="card-img-top mx-2 my-2"
                     alt="..."
-                    style={{ width: "12%", height: "80px", borderRadius:"5px" }}
+                    style={{ width: "12%", height: "80px", borderRadius: "5px" }}
                   />
+
                   <div>
                     <h5 className="card-title text-start my-3 text-white">
                       {job.name}
@@ -88,6 +124,30 @@ function PostJobContentHere() {
                         <span style={{ fontSize: 14 }}>{job.description}</span>
                       </p>
                     </h5>
+                  </div>
+                  <div style={{ marginLeft: "auto", marginRight: "10px" }}>
+                    <div
+                      className="mx-auto my-3  "
+                      style={{
+                        width: "120px",
+                        height: "50px",
+                        backgroundColor: "rgb(0, 80, 73)",
+                        borderRadius: "10px",
+                        padding: "12px 0",
+                        color: "#fff",
+                      }}
+                      onClick={handleViewDetailClick}
+                    >
+                      <p>View detail</p>
+                    </div>
+                    {isOpen && (
+                      <ModalComponent
+                        isOpen={isOpen}
+                        toggleModal={() => setIsOpen(false)}
+                        jobDetails={currentJobDetails}
+
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="card-body d-flex justify-content-between">
@@ -113,7 +173,7 @@ function PostJobContentHere() {
                   >
                     <p className="text-start my-2 ">{job.type}</p>
                     <p className="text-end my-2 text-end ms-3">{job.salaryMode}
-                    <span> {job.travel}</span>
+                      <span> {job.travel}</span>
                     </p>
                   </div>
                 </div>
@@ -121,6 +181,7 @@ function PostJobContentHere() {
             </div>
           ))}
         </div>
+
       ))}
     </div>
   );

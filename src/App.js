@@ -20,7 +20,10 @@ import { Routes, Route } from "react-router-dom";
 import Signupfromcompanypage from "./Pages/Signupcompany";
 import Loginfromcompanypage from "./Pages/Companyloginpage";
 import Profilesscreen from "./Talentsearchpages/Talentprofilepage";
-import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import Savejobs from "./Pages/Savejobs/index.js";
+import Appliedjobs from "./Pages/Appliedjobs/index.js";
+import Rejectedjobs from "./Pages/Rejectedjobs/index.js";
+
 
 // Dummy authentication check (replace with your actual logic)
 const isAuthenticated = localStorage.getItem("token");
@@ -47,6 +50,11 @@ function App() {
         <Route path="/companypremiumpage" element={<Talentpremium />} />
         <Route path="/jobpost" element={<TalentPostpage />} />
         <Route path="/userprofile/:userId" element={<Profilesscreen />} />
+        <Route path="/savejobs" element={<Savejobs />} />
+        <Route path="/Appliedjobs" element={<Appliedjobs />} />
+        <Route path="/rejectedjobs" element={<Rejectedjobs />} />
+
+
 
       </Routes>
     </div>

@@ -1,0 +1,27 @@
+.back-header-diff {
+    background: #2CC0B2;
+    border: none;
+    padding: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.back-header-diff:focus, .back-header-diff:focus-visible{
+    outline: none;
+    box-shadow: none;
+}
+
+.back-header-diff option{
+    color: #fff;
+    font-size: 16px;
+}
+.custom_icon svg {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+}
+.custom_icon {
+    position: relative;
+}

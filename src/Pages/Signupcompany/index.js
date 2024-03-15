@@ -4,15 +4,17 @@ import LOGO from "../../Assests/logo.png";
 import SideImg from "../../Assests/signupimage.png";
 import Facebook from "../../Assests/facebook.png";
 import GOOGLE from "../../Assests/googleiconbtn.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { FacebookAuth, auth, googleAuthProvider } from "../../firebase";
 import axios from "axios";
 import Loader from "../../Components/Loader";
 import { baseurl } from "../../Config/utilites";
-
 function Signupfromcompanypage() {
+  const location =useLocation();
+  const {type}=location.state || {};
+  console.log("type",type);
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +44,7 @@ function Signupfromcompanypage() {
     setIsLoading(true);
 
     try {
-      const data = { firstName: name, email: email, password: password };
+      const data = { firstName: name, email: email, password: password ,role:type };
       await axios.post(
         `${baseurl}/auth/signup`,
         data,
@@ -52,9 +54,10 @@ function Signupfromcompanypage() {
           },
           
         }
+        
       );
-
-      console.log("Register successful :)");
+     
+      console.log("Register successful :)",data);
       navigate("/companylogin"); // Corrected navigation
     } catch (error) {
       console.error(error);

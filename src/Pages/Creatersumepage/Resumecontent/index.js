@@ -20,7 +20,7 @@ function Resumecontent() {
         state: '',
         qualification: '',
     });
-    const [selectedTemplate, setSelectedTemplate] = useState('template1');
+    const [selectedTemplate, setSelectedTemplate] = useState('temp1');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const resumeRef = useRef(null);
 
@@ -46,76 +46,30 @@ function Resumecontent() {
         }));
     };
 
-    // const handleCreateResume = (e) => {
-    //     e.preventDefault(); // Prevent form submission
-
-    //     if (!selectedTemplate) {
-    //         alert('Please select a template before creating the resume.');
-    //         return;
-    //     }
-
-    //     // Display the selected template dynamically
-    //     if (selectedTemplate === 'template1') {
-    //         console.log('Selected Template 1');
-    //         // You can add logic to customize the template content here
-    //     } else if (selectedTemplate === 'template2') {
-    //         console.log('Selected Template 2');
-    //         // You can add logic to customize the template content here
-    //     }
-
-    //     // Log the form data (remove this in production)
-    //     console.log('Form Data:', formData);
-
-    //     // Get the content of the resume container
-    //     const resumeContent = resumeRef.current.innerHTML;
-
-    //     // Create a configuration object for html2pdf
-    //     const pdfOptions = {
-    //         margin: 10,
-    //         filename: 'resume.pdf',
-    //         image: { type: 'jpeg', quality: 0.98 },
-    //         html2canvas: { scale: 2 },
-    //         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    //     };
-
-    //     // Generate PDF from the HTML content
-    //     html2pdf().from(resumeContent).set(pdfOptions).outputPdf((pdf) => {
-    //         // Display the generated PDF for download
-    //         const blob = new Blob([pdf], { type: 'application/pdf' });
-    //         const link = document.createElement('a');
-    //         link.href = window.URL.createObjectURL(blob);
-    //         link.download = 'resume.pdf';
-    //         link.click();
-    //     });
-    // };
-
-
-    const handleCreateResume = async (e) => {
-        // e.preventDefault(); // Prevent form submission
-    
+   
+    const handleCreateResume = async () => {
         if (!selectedTemplate) {
             alert('Please select a template before creating the resume.');
             return;
         }
     
-        // Log the form data (remove this in production)
         console.log('Form Data:', formData);
-    
-        // Define API endpoint
-        const apiEndpoint = 'http://dzyntech-101:3000/api/v1/jobbook/talent/home/generate';
-    
-        // Prepare the data to be sent
+        const token = localStorage.getItem("token");
+
+        const apiEndpoint = 'https://app.jobbooks.app/api/v1/jobbook/talent/home/generate';
         const dataToSend = {
+            // Adjust according to your API expectations
+            temp: selectedTemplate,
             ...formData,
-            templateName: selectedTemplate, // Include the selected template name
+            // Convert any necessary parts of formData to the expected format
         };
     
         try {
-            // Send a POST request to the API
             const response = await fetch(apiEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(dataToSend),
             });
@@ -126,11 +80,9 @@ function Resumecontent() {
     
             const data = await response.json();
             console.log('Success:', data);
-            // Handle success scenario, like showing a success message or processing the response data
-    
+            closeModal(); // Assuming you want to close the modal upon successful API call
         } catch (error) {
             console.error('Error:', error);
-            // Handle error scenario
         }
     };
     
@@ -389,7 +341,7 @@ function Resumecontent() {
                     </button> */}
                 </div>
             </div>
-            <Modal isOpen={isModalOpen} closeModal={closeModal} selectTemplate={handleCreateResume} />
+            <Modal isOpen={isModalOpen} closeModal={closeModal} selectTemplate={handleCreateResume} onConfirm={handleCreateResume} />
         </div>
 
     );

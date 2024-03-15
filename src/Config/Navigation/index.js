@@ -4,63 +4,85 @@ import "./Style.css";
 import { Link, useNavigate } from "react-router-dom";
 import defaultAvatar from '../../Assests/imagelogin.png';
 import axios from "axios";
-import {  baseurl } from "../../Config/utilites";
+import { baseurl } from "../../Config/utilites";
+import Loader from '../../Components/Loader'
 
 
 function Nav() {
-    let navigate = useNavigate(); // Use useNavigate for navigation
-  // Use a state hook to manage the avatar, initializing it either from local storage or with a default image
+  const token = localStorage.getItem('token');
+  let navigate = useNavigate();
   const [avatar, setAvatar] = useState(localStorage.getItem('userAvatar') || defaultAvatar);
+  const [notifications, setNotifications] = useState([]);
+  const [isLoadingLogout, setIsLoadingLogout] = useState(false);
+  const [type, setType] = useState("")
+  console.log(type, "navie");
 
-  useEffect(() => {
-    // Attempt to load the avatar from local storage when the component mounts
-    const savedAvatar = localStorage.getItem('userAvatar');
-    if (savedAvatar) {
-      setAvatar(savedAvatar);
-    }
-  }, []);
 
-  const handleLogout = () => {
+  const fetchNotifications = () => {
     const token = localStorage.getItem('token');
     console.log("Token retrieved", token);
-    
-    let config = {
-      method: 'post',
-      url: `${baseurl}/auth/logout`,
-      headers: { 
+    fetch(`${baseurl}/talent/home/notifications`, {
+      method: 'GET',
+      headers: {
         'Authorization': `Bearer ${token}`
-      },
-    };
-  
-    axios.request(config)
-      .then(() => {
-        console.log("Logout successful");
-        localStorage.removeItem("token");
-        localStorage.removeItem("userAvatar"); // Also remove the avatar from local storage upon logout
-        navigate('/', { replace: true });
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Adjust based on your actual data structure
+        if (data.success) {
+          // If the notifications are wrapped in a property (e.g., data.notifications)
+          const fetchedNotifications = Array.isArray(data.notification) ? data.notification : [];
+          setNotifications(data.data.notification);
+          console.log("notification data", data.data.notification[0])
+          console.log("notification data ===>>>", data.data.notification[0].title)
+        
+
+
+        } else {
+          console.error('Invalid data format or unsuccessful response', data);
+          setNotifications([]);
+        }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        console.error('Error fetching notifications:', error);
+        setNotifications([]);
       });
   };
 
-  const triggerFileInput = () => {
-    document.getElementById('avatarInput').click();
+  const handleLogout = () => {
+    setIsLoadingLogout(true); // Start loading
+
+    const token = localStorage.getItem('token');
+    axios.post(`${baseurl}/auth/logout`, {}, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userAvatar");
+        setIsLoadingLogout(false); // Stop loading
+
+        // navigate('/', { replace: true }); // Navigate or reload
+        window.location.reload(); // If you want to reload the page
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoadingLogout(false); // Stop loading even if there's an error
+      });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-        localStorage.setItem('userAvatar', reader.result); // Save the base64 image string to local storage
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
-  
+  const Handleparamscomapany = () => {
+    setType("company")
+    setTimeout(() => {
+
+      navigate("/companysignup", { state: { type: "company" } })
+    }, 3000);
+  }
+
+
+
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -87,7 +109,7 @@ function Nav() {
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  to={"/home"}
+                  to={"/"}
                   className="nav-link"
                   aria-current="page"
                   href="#"
@@ -115,25 +137,28 @@ function Nav() {
                   Create Resume
                 </Link>
               </li>
+
+
             </ul>
             <form className="d-flex" role="search">
-              <>
-                {/* <Link to={"/companysignup"}>
-                  <button type="button" className="btn btn-success btnnn">
-                    Sign Up
-                  </button>
-                </Link>
+              {isLoadingLogout && <div><Loader /></div>}
+              <div className="dropdown">
+            {  token && ( <button style={{ borderColor: "transparent" }} onClick={fetchNotifications}   className="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16" style={{ color: "rgb(24 187 171)", marginTop: "5px", marginRight: "5px" }}>
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901" />
+                  </svg>
+                </button>)}
+                <ul className="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton2" style={{ background: "#15bdac" }}>
+                  {notifications.map((notification) => (
+                    <li key={notification._id}>
+                      <a className="dropdown-item text-white">
+                        {notification.title} 
+                      </a>
+                    </li>
+                  ))}
+                </ul>
 
-                <Link to={"/companylogin"}>
-                  <button
-                    type="button"
-                    className="btn btn-success btnnn"
-                    style={{ marginLeft: "20px" }}
-                  >
-                    Login
-                  </button>
-                </Link> */}
-              </>
+              </div>
             </form>
             <ul className="navbar-nav">
               <li className="nav-item dropdown">
@@ -145,39 +170,32 @@ function Nav() {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {/* <img src={avatar} width="30" height="30" alt="profile" className="rounded-circle"/> */}
+                  <img src={avatar} width="20" height="20" alt="profile" />
                 </a>
                 <ul
-                  className="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
+                  className="dropdown-menu dropdown-menu-bg-light" style={{ background: "#15bdac" }} aria-labelledby="dropdownMenuButton2"
+
                 >
                   {/* <li><a className="dropdown-item" href="#" onClick={triggerFileInput}>Change Image</a></li> */}
-                  <li><a className="dropdown-item " href="#">Notifications</a></li>
                   <Link to={"/companysignup"}>
-                  <li>
-                    <p className="dropdown-item"  >Signup as an company </p>
+                    <li className="box">
+                      <a className="dropdown-item  " onClick={Handleparamscomapany}  >Signup as an company </a>
                     </li>
-                    </Link>
+                  </Link>
 
-                    <Link to={"/signup"}>
-                  <li>
-                    <p className="dropdown-item">Signup as an Talent</p>
-                  </li>
-                 </Link>
+                  <Link to={"/signup"}>
+                    <li className="box">
+                      <a className="dropdown-item ">Signup as an Talent</a>
+                    </li>
+                  </Link>
 
-                  <li><p className="dropdown-item" onClick={handleLogout}>Log Out</p></li>
+
+                  <li className="box"><p className="dropdown-item " style={{ color: "#fff", cursor: "pointer" }} onClick={handleLogout}>{token ? "logout" : ""}</p></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
-        {/* <input
-          type="file"
-          id="avatarInput"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-          accept="image/*"
-        /> */}
       </nav>
     </>
   );

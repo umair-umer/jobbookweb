@@ -1,37 +1,27 @@
 import React from 'react';
 
-function PostModal({ setShowModal }) {
-    const handleClose = () => {
-        setShowModal(false);
-    };
+const ModalComponent = ({ isOpen, toggleModal, jobDetails }) => {
+  if (!isOpen) return null;
 
-    return (
-        <>
-            <div className='container'>
-                {/* The Modal */}
-                <div className="modal fade show" style={{ display: 'block' }} id="myModal">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            {/* Modal Header */}
-                            <div className="modal-header">
-                                <h4 className="modal-title">Modal Heading</h4>
-                                <button type="button" className="btn-close" onClick={handleClose} />
-                            </div>
-                            {/* Modal body */}
-                            <div className="modal-body">Modal body..</div>
-                            {/* Modal footer */}
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" onClick={handleClose}>
-                                    Close
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal-backdrop fade show"></div>
-            </div>
-        </>
-    );
-}
+  return (
+    <div className="modal show d-block">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Job Details</h5>
+            <button type="button" className="close" onClick={toggleModal}>
+              {/* <span>&times;</span> */}
+            </button>
+          </div>
+          <div className="modal-body">
+            {/* Display job details here */}
+            <p>{jobDetails?.title}</p>
+            {/* Continue displaying other job details */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default PostModal;
+export default ModalComponent;

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Styles.css';
 import Companylogo from '../../../Assests/C.png';
 import Bell from '../../../Assests/bellicon.png'
@@ -7,29 +7,30 @@ import { Button } from 'react-bootstrap';
 import axios from "axios";
 import Loader from '../../../Components/Loader';
 import { Imagebaseurl, baseurl } from '../../../Config/utilites';
-
+import { useNavigate } from 'react-router-dom';
 
 function Jobcontent() {
+    const navigate = useNavigate();
     const [selectedJob, setSelectedJob] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [jobsData, setJobsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+
 
     useEffect(() => {
         const fetchJobs = async () => {
             setIsLoading(true);
             setError(null);
-    
+
             const token = localStorage.getItem("token");
             const userType = localStorage.getItem("userType");
-    
+
             const baseURL =
                 userType === "company"
-                ? `${baseurl}/company/home/jobs`
-                : `${baseurl}/talent/home/jobs`;
-    
+                    ? `${baseurl}/company/home/jobs`
+                    : `${baseurl}/talent/home/jobs`;
+
             try {
                 const response = await axios.get(baseURL, {
                     headers: {
@@ -38,6 +39,8 @@ function Jobcontent() {
                     },
                 });
                 setJobsData(response.data.data); // Adjust according to your API response
+                console.log("Data ====>>>", response.data.data)
+
                 setIsLoading(false);
             } catch (error) {
                 setError(error.toString());
@@ -47,23 +50,22 @@ function Jobcontent() {
 
         fetchJobs();
     }, []);
-    
+
     if (isLoading) {
         return <Loader />;
     }
-    
+
     if (error) {
-        return <Loader/>;
+        return <Loader />;
     }
-    
-    // Corrected no data check
+
     if (jobsData.length === 0) {
         return <div>No jobs found.</div>; // Corrected message
     }
 
 
     const handleJobClick = (job) => {
-        
+
         setSelectedJob(job);
     };
     const handleApplyClick = () => {
@@ -74,6 +76,43 @@ function Jobcontent() {
         setShowModal(false);
     };
 
+    const saveToggleJob = async () => {
+        const token = localStorage.getItem("token");
+        const action = "save"; // Or "save", depending on the context
+        const url = `${baseurl}/talent/home/saveToggle/${selectedJob._id}?action=${action}`;
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        };
+        const body = JSON.stringify({
+            "action": "save" // Adjust based on the current state or user action
+        });
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST', // HTTP method
+                headers: headers, // HTTP headers
+                body: body, // request body
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                const data = await response.json(); // Assuming the server responds with JSON
+                console.log(data);
+                alert('Job save successfully'); // Notify the user
+                navigate('/savejobs');
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
+
+
+
+
+
+
 
     return (
         <div className='container my-5'>
@@ -82,22 +121,22 @@ function Jobcontent() {
                     <div className='card jobcard'>
                         <div className='card-body'>
                             <div className='d-flex'>
-                                <div className=' d-flex align-items-center justify-content-between card-footer text-body-secondary w-100' 
-                                style={{border:"none"}} >
-                                    {selectedJob ? selectedJob.postedDate : 'Software engineer in Austin, Texas' }
-                               
-                                   <div className='d-flex align-items-center justify-content-between'>
-                                   <p className='my-3'></p>
-                                   
-                                  
-                                   </div>
+                                <div className=' d-flex align-items-center justify-content-between card-footer text-body-secondary w-100'
+                                    style={{ border: "none" }} >
+                                    {selectedJob ? selectedJob.postedDate : 'Software engineer in Austin, Texas'}
+
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <p className='my-3'></p>
+
+
+                                    </div>
                                 </div>
                             </div>
                             {jobsData.map((job) => (
-                                <div key={job.id} className='card mb-3 cdhover'  style={{border:"none"}} onClick={() => handleJobClick(job)}>
+                                <div key={job._id} className='card mb-3 cdhover' style={{ border: "none" }} onClick={() => handleJobClick(job)}>
                                     <div className='card-body'>
                                         <div className='d-flex mx-3 m-3'>
-                                        
+
                                             <div>
                                                 <h5 className='card-title text-start mx-3'>{job.title}</h5>
                                                 <p className='card-title text-start mx-3' style={{ marginTop: '-6px' }}>
@@ -139,14 +178,21 @@ function Jobcontent() {
 
                                     </div>
                                 </div>
-                                {/* <a href='#' className='btn btn-success recent me-3'>
-                                    Save
-                                </a> */}
+
                                 {selectedJob && (
-                            <Button variant='success' className='recent mx-2' onClick={handleApplyClick}>
-                                Apply
-                            </Button>
-                        )}
+
+                                    <>
+                                        <Button variant='success' className='recent me-3' onClick={saveToggleJob} >
+                                            Save
+                                        </Button>
+                                        {/* Your existing buttons and modals... */}
+                                    </>
+                                )}
+                                {selectedJob && (
+                                    <Button variant='success' className='recent mx-2' onClick={handleApplyClick}>
+                                        Apply
+                                    </Button>
+                                )}
                                 <div className='d-flex my-3 '>
                                     <div className='view'>
                                         <h6 className='card-title text-start mx-3'>Job</h6>
@@ -249,11 +295,14 @@ function Jobcontent() {
                                     </div>
 
                                 </div>
+
                                 <ApplyModal
-                    showModal={showModal}
-                    handleCloseModal={handleCloseModal}
-                    jobTitle={selectedJob ? selectedJob.title : ''}
-                />
+                                    showModal={showModal}
+                                    handleCloseModal={handleCloseModal}
+                                    jobTitle={selectedJob ? selectedJob.title : ''}
+                                    jobId={selectedJob ? selectedJob._id : ''} // Ensure selectedJob._id is the correct reference
+                                    imageUrl={selectedJob ? selectedJob.imageUrl : ''}
+                                />
 
                             </div>
                         </div>

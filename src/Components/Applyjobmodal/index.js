@@ -5,9 +5,11 @@ import Download from '../../Assests/Download.png';
 import './Styles.css';
 import axios from 'axios';
 import { baseurl } from '../../Config/utilites';
+import { useParams } from 'react-router-dom';
 
 
-const ApplyModal = ({ showModal, handleCloseModal, jobTitle, imageUrl }) => {
+const ApplyModal = ({ showModal, handleCloseModal, jobTitle, jobId, imageUrl }) => {
+    // let { jobId } = useParams();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -42,33 +44,28 @@ const ApplyModal = ({ showModal, handleCloseModal, jobTitle, imageUrl }) => {
         formData.append('city', city);
         formData.append('state', state);
         formData.append('zipCode', zipCode);
-        if (resumeFile) {
-            formData.append('resume', resumeFile, resumeFile.name);
-        }
+        formData.append('jobId', jobId); // This line is new
 
-        const token = localStorage.getItem("token"); // Ensure you have the token available in localStorage
+        if (resumeFile) formData.append('resume', resumeFile, resumeFile.name);
+
+        console.log("Submitting form data for job ID:", jobId); // Debugging log
+    
+        const token = localStorage.getItem("token");
+    
         try {
-            const response = await axios.post(`${baseurl}/talent/home/apply/659850ae4fb74958cf76791c`, formData, {
-                headers: { 
+            const response = await axios.post(`${baseurl}/talent/home/apply/${jobId}`, formData, {
+                headers: {
                     Authorization: `Bearer ${token}`,
-        
                 },
             });
-            setTimeout(() => {
-                handleCloseModal(); // Optionally close the modal after a delay
-            }, 3000);
-            console.log(response.data);
-            alert("Applied Successfully :) ")
-            handleCloseModal(); // Close the modal on successful submission
-            
+            console.log("Response data:", response.data); // Debugging log
+            alert("Applied Successfully :)");
+            handleCloseModal();
         } catch (error) {
-            // Assuming the API sends a specific response for duplicate applications
-            if (error.response && error.response.data && error.response.data.message.includes('already applied')) {
-             
-            } else {
-            
-            }
+            console.error("Error applying:", error.response ? error.response.data : error); // Improved error logging
+            alert("Error applying: " + (error.response ? error.response.data.message : error.message));
         }
+    
     };
 
     const updateField = (setter) => (e) => setter(e.target.value);

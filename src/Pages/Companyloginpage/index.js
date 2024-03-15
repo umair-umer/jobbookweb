@@ -24,14 +24,15 @@ function Loginfromcompanypage() {
 
   const dispatch = useDispatch();
   const handleLogin = async (e) => {
-    const { token, userType } = handleLogin;
+    const { token, role } = handleLogin;
 
     // Store token and userType in localStorage for persistence across sessions
     localStorage.setItem('token', token);
-    localStorage.setItem('userType', userType);
+    localStorage.setItem('userType', role);
+    console.log("userType",role)
   
     // Update Redux store
-    dispatch(setAuthInfo(token, userType));
+    dispatch(setAuthInfo(token, role));
 
     e.preventDefault(); // Prevent default form submission
     if (isLoggingIn) return;
@@ -130,7 +131,7 @@ function Loginfromcompanypage() {
                     <h6 className="card-title me-3">
                       Already have an account?
                     </h6>
-                    <Link to={"companylogin"}>
+                    <Link to={"/companysignup"}>
                     <button className="btn btn-outline-success"  style={{borderRadius:"20px"}}> 
                       SINGUP
                     </button>

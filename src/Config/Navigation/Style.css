@@ -1,54 +1,90 @@
-.navbar{
+.navbar {
 
     align-items: center;
 }
+
 a.navbar-brand {
     text-align: left;
 }
-.nav-link{
 
-      font-size: 19px;
-      font-weight: 500;
-      color:rgba(0, 80, 73, 1);
-      margin-right: 20px;
-      
+.nav-link {
+
+    font-size: 19px;
+    font-weight: 500;
+    color: rgba(0, 80, 73, 1);
+    margin-right: 20px;
+
 }
 
-.nav-link:hover{
+ul.dropdown-menu a {
+    text-decoration: none !important;
+    color: #fff !important;
+}
+
+ul.dropdown-menu .dropdown-item:focus,
+.dropdown-item:hover {
+    color: #fff !important;
+    background-color: transparent !important;
+}
+
+.nav-link:hover {
 
     color: rgba(6, 199, 180, 1);
-   
 
+
+}
+
+.dropdown-toggle::after {
+    vertical-align: 0.15em;
+}
+
+#dropdownMenuButton2 .dropdown-toggle::after {
+    font-size: 18px;
 }
 
 .btnnn {
     width: 130px;
-    background-color: rgba(6, 199, 180, 1) ;
+    background-color: rgba(6, 199, 180, 1);
     color: #fff;
-     justify-content: center;
-     align-items: center;
-     font-size: 14px;
-     font-weight: 500;
-     border: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
 }
 
 .bg-custom-1 {
     background-color: #85144b;
-  }
-  
-  .bg-custom-2 {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-  }
+}
+
+.bg-custom-2 {
+    background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+
+.scrollable-menu {
+    /* width: 400px; */
+    height: 400px;
+    max-height: 200px;
+    /* Adjust based on your need */
+    overflow-x: hidden;
+}
+
+
+
+
+
 
 @media only screen and (max-width: 600px) {
-   .navbar-brand{
+    .navbar-brand {
 
-       width: 50%;
-       height: 50%;
-   }
-   .d-flex{
+        width: 50%;
+        height: 50%;
+    }
 
-      align-items: center;
-      justify-content: center;
-   }
-  }
+    .d-flex {
+
+        align-items: center;
+        justify-content: center;
+    }
+}

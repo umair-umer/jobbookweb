@@ -1,0 +1,52 @@
+.special {
+    border: none;
+    border-radius: 15px;
+    margin-top: 40px;
+    box-shadow: 0px 0px 4px #878787;
+}
+
+.special .card-body h5{
+    color: #000;
+    text-align: left;
+    font-size: 22px;
+}
+
+.centering-items{
+    margin: 0 auto !important;
+}
+
+.special .card-body .upper-para p{
+    color: #000;
+    text-align: left;  
+    font-size: 16px;
+}
+
+.special .image-box{
+    background: #000;
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    margin-right: 25px;
+}
+
+.special .different-bottom{
+    width: 70%;
+}
+
+.special .aloo{
+    width: 180px;
+}
+
+.special .different-bottom p{
+    color: #000;
+    font-size: 17px;
+}
+
+.special .aloo .supply{
+    background: #30BDB0;
+    color: #fff;
+    padding: 15px 40px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+}
