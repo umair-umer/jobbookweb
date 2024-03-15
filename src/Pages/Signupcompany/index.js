@@ -11,6 +11,9 @@ import { FacebookAuth, auth, googleAuthProvider } from "../../firebase";
 import axios from "axios";
 import Loader from "../../Components/Loader";
 import { baseurl } from "../../Config/utilites";
+import { toast } from 'react-toastify';
+
+
 function Signupfromcompanypage() {
   const location =useLocation();
   const {type}=location.state || {};
@@ -31,12 +34,12 @@ function Signupfromcompanypage() {
     if (isSigningUp) return;
 
     if (!name || !email || !password || !confirmPassword) {
-      alert("Please fill in all fields.");
+      toast.warn("Please fill in all fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      toast.warn("Passwords do not match.");
       return;
     }
 
@@ -57,10 +60,10 @@ function Signupfromcompanypage() {
         
       );
      
-      console.log("Register successful :)",data);
+      toast.success("Register successful :)",data);
       navigate("/companylogin"); // Corrected navigation
     } catch (error) {
-      console.error(error);
+      toast.error(error);
       console.log("An error occurred during sign up.");
     } finally {
       setIsSigningUp(false);

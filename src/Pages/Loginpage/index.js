@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux';
 import { setAuthInfo } from '../../store/actions/authActions';
 import Loader from '../../Components/Loader';
 import { baseurl } from '../../Config/utilites';
+import { toast } from 'react-toastify';
+
 
 function Loginfrompage() {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ function Loginfrompage() {
     try {
       const response = await axios.request(config);
       console.log(JSON.stringify(response.data));
-      console.log("Login Successfully :) ");
+      toast.success("Login Successfully ");
 
       // Assuming the response contains the token you need to store
       localStorage.setItem("token", response.data.token); // Adjust according to your response structure
@@ -59,8 +61,8 @@ function Loginfrompage() {
       // Navigate to the home page
       navigate("/");
     } catch (error) {
-      console.error(error);
-      console.log("Login failed: " + (error.response?.data.message || "Unknown error"));
+      toast.error(error);
+      toast.error("Login failed: " + (error.response?.data.message || "Unknown error"));
     } finally {
       setIsLoggingIn(false);
     }

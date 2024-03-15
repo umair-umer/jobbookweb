@@ -8,6 +8,7 @@ import axios from "axios";
 import Loader from '../../../Components/Loader';
 import { Imagebaseurl, baseurl } from '../../../Config/utilites';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Jobcontent() {
     const navigate = useNavigate();
@@ -16,6 +17,8 @@ function Jobcontent() {
     const [jobsData, setJobsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isSaved, setIsSaved] = useState(false);
+    const [isApplied, setIsApplied] = useState(false);
 
 
     useEffect(() => {
@@ -100,11 +103,13 @@ function Jobcontent() {
             } else {
                 const data = await response.json(); // Assuming the server responds with JSON
                 console.log(data);
-                alert('Job save successfully'); // Notify the user
+                toast.success('Job save successfully'); // Notify the user
                 navigate('/savejobs');
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error);
+            // Optionally, display an error toast
+            toast.error(' Already save job');
         }
     };
 
@@ -183,14 +188,14 @@ function Jobcontent() {
 
                                     <>
                                         <Button variant='success' className='recent me-3' onClick={saveToggleJob} >
-                                            Save
+                                        {selectedJob.saved ? 'Saved' : 'Save'}
                                         </Button>
                                         {/* Your existing buttons and modals... */}
                                     </>
                                 )}
                                 {selectedJob && (
                                     <Button variant='success' className='recent mx-2' onClick={handleApplyClick}>
-                                        Apply
+                                        {selectedJob.applied ? 'Applied' : 'Apply'}
                                     </Button>
                                 )}
                                 <div className='d-flex my-3 '>

@@ -6,6 +6,8 @@ import defaultAvatar from '../../Assests/imagelogin.png';
 import axios from "axios";
 import { baseurl } from "../../Config/utilites";
 import Loader from '../../Components/Loader'
+import moment from 'moment';
+import GOOGLE from '../../Assests/google.png'
 
 
 function Nav() {
@@ -80,14 +82,29 @@ function Nav() {
     }, 3000);
   }
 
+//   let date = moment();
+//   let duration = moment().diff(date,date)
+//   let diff = moment(duration).format('YYYY-MM-DD')
+
+//   var before = moment('2017.02.12 09:00','YYYY.MM.DD HH:mm');
+// var now = moment();
 
 
+//   let curtDate = moment(now - before).format('D[ day(s)] H[ hour(s)] m[ minute(s)] s[ second(s) ago.]')
+
+
+
+// let dateOne = moment([2024, 3, 10]);
+// let dateTwo = moment([2001, 10, 28]);
+ 
+// Function call
+// let result = dateOne.fromNow() 
 
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container">
-          <Link to={"/home"} className="navbar-brand" href="#">
+          <Link to={"/"} className="navbar-brand" href="#">
             <img
               src={LOGO}
               onResize={"center"}
@@ -151,9 +168,19 @@ function Nav() {
                 <ul className="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenuButton2" style={{ background: "#15bdac" }}>
                   {notifications.map((notification) => (
                     <li key={notification._id}>
-                      <a className="dropdown-item text-white">
+                      <a className="dropdown-item text-white text-b">
+                        <img src={"https://app.jobbooks.app/uploads/assets/lpxyks4sam9l6tl9jrur.png"} style={{width:"8%",height:"8%",marginRight:"10px"}}/>
                         {notification.title} 
                       </a>
+                      <a className="dropdown-item text-white" style={{fontSize:"13px"}}>
+                        {notification.message} 
+                      </a>
+
+                      <a className="dropdown-item text-white text-end" style={{fontSize:"13px"}}>
+                        {moment(notification.createdAt).fromNow()} 
+                      </a>
+                      <hr/>
+
                     </li>
                   ))}
                 </ul>

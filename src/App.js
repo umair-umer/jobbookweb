@@ -23,7 +23,8 @@ import Profilesscreen from "./Talentsearchpages/Talentprofilepage";
 import Savejobs from "./Pages/Savejobs/index.js";
 import Appliedjobs from "./Pages/Appliedjobs/index.js";
 import Rejectedjobs from "./Pages/Rejectedjobs/index.js";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Dummy authentication check (replace with your actual logic)
 const isAuthenticated = localStorage.getItem("token");
@@ -31,6 +32,7 @@ const isAuthenticated = localStorage.getItem("token");
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Routes>
 
         <Route path="/" exact element={<Homepage />} />

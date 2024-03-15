@@ -3,6 +3,7 @@ import Loader from '../../../Components/Loader';
 import { Imagebaseurl, baseurl } from '../../../Config/utilites';
 import './appliedjobscontentstyle.css'
 
+
 function Applyjobscontent() {
   const [savedJobs, setSavedJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

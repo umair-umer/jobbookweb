@@ -4,12 +4,14 @@ import IMG from '../../Assests/profilementor.png';
 import Download from '../../Assests/Download.png';
 import './Styles.css';
 import axios from 'axios';
-import { baseurl } from '../../Config/utilites';
-import { useParams } from 'react-router-dom';
+import { Imagebaseurl, baseurl } from '../../Config/utilites';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 
 const ApplyModal = ({ showModal, handleCloseModal, jobTitle, jobId, imageUrl }) => {
-    // let { jobId } = useParams();
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -59,11 +61,12 @@ const ApplyModal = ({ showModal, handleCloseModal, jobTitle, jobId, imageUrl }) 
                 },
             });
             console.log("Response data:", response.data); // Debugging log
-            alert("Applied Successfully :)");
+            toast.success("Applied Successfully :)");
             handleCloseModal();
+            navigate("/Appliedjobs")
         } catch (error) {
-            console.error("Error applying:", error.response ? error.response.data : error); // Improved error logging
-            alert("Error applying: " + (error.response ? error.response.data.message : error.message));
+            toast.error("Already Applied:", error.response ? error.response.data : error.message); // Improved error logging
+            // toast.call("Error applying: " + (error.response ? error.response.data.message : error.message));
         }
     
     };
