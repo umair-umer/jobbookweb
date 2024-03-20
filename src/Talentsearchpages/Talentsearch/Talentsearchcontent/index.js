@@ -13,7 +13,7 @@ function Talentsearchcontent() {
   const [itemsPerPage] = useState(10);
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType");
+    const userType = localStorage.getItem("userRole");
     const apiUrl =
       userType === "company"
         ? `${baseurl}/company/home/talents`

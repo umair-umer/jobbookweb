@@ -16,8 +16,15 @@ function Userprofilescreen() {
   const [isLoading, setIsLoading] = useState(true);
   const { userId } = useParams(); 
   const token = localStorage.getItem("token");
+  
 
   useEffect(() => {
+    // Store userId in localStorage
+    console.log("Current userId:", userId); // Debugging: Log the userId to ensure it's retrieved correctly
+
+    localStorage.setItem("userId", userId); // Attempt to store userId in localStorage
+    console.log("Stored userId in localStorage"); 
+
     const fetchProfileData = async () => {
       const apiUrl = `${baseurl}/auth/user-profile?userId=${userId}`;
   
@@ -30,14 +37,13 @@ function Userprofilescreen() {
         });
         if (response.data.success && response.data.data.length > 0) {
           setProfileData(response.data.data[0]); // Access the first item of the array
-          
         } else {
           // Handle the case where the array is empty or success is false
           console.error('No profile data found or request not successful');
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
-      }finally{
+      } finally {
         setIsLoading(false);
       }
     };
@@ -45,7 +51,7 @@ function Userprofilescreen() {
     fetchProfileData();
   
   }, [userId, token]);
-  
+
   // ...
   
   // Then in your rendering, you can check if profileData has been set:

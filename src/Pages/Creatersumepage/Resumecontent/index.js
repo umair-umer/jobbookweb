@@ -4,6 +4,7 @@ import './Styles.css'
 import Modal from '../../../Components/Createresumemodal';
 import { toast } from 'react-toastify';
 import { saveAs } from 'file-saver';
+import { baseurl } from '../../../Config/utilites';
 
 function Resumecontent() {
     const [formData, setFormData] = useState({
@@ -58,7 +59,7 @@ function Resumecontent() {
         console.log('Form Data:', formData);
         const token = localStorage.getItem("token");
 
-        const apiEndpoint = 'https://app.jobbooks.app/api/v1/jobbook/talent/home/generate';
+        const apiEndpoint = `${baseurl}/talent/home/generate`;
         const dataToSend = {
             // Adjust according to your API expectations
             temp: selectedTemplate,

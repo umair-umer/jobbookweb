@@ -68,6 +68,12 @@ function Loginfromcompanypage() {
       console.log("login Successfully :) ");
       // Assuming the response contains the token you need to store
       localStorage.setItem("token", response.data.token); // Adjust according to your response structure
+      localStorage.setItem("user", response.data.user.id);
+      localStorage.setItem("userRole", response.data.user.role);
+
+      console.log("data",response.data.user);
+      console.log("data012",response.data.user.id);
+
       // Navigate to the home page
       navigate("/companyhomepage");
     } catch (error) {
