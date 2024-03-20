@@ -1,0 +1,29 @@
+.full-box {
+    background: #058E81;
+    width: 70%;
+}
+
+.centering-heading h5,
+.modal-body p {
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.modal.show .modal-dialog {
+    display: flex;
+    justify-content: center;
+}
+
+.styling-box-button-count {
+    background: #005C54;
+    border-radius: 10px;
+    padding: 25px 15px;
+    width: 50%;
+    margin: 15px auto;
+    display: flex;
+    justify-content: space-between;
+}
+.modal-box-close-button, .close-modal-box-button{
+    background-color: #005C54 !important;
+    border: 0 !important;
+}

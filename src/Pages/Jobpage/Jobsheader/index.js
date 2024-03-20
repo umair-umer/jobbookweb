@@ -3,14 +3,20 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './jobsheaderstyle.css'
 
 const JobHeader = () => {
-    const navigate = useNavigate(); // Hook to get navigate function
+    const navigate = useNavigate(); 
+    const token = localStorage.getItem('token');
 
     // Handler for when the select value changes
     const handleSelectChange = (event) => {
         navigate(event.target.value); // Navigate based on the selected value
     };
 
-    return (
+    // If no token, return null or any fallback UI
+    if (!token) {
+        return null; // or any other fallback UI
+    }
+
+    return ( 
         <div className='container my-3'>
             <div className='custom_icon'>
                 <select className="form-select back-header-diff" aria-label="Default select example" onChange={handleSelectChange}>

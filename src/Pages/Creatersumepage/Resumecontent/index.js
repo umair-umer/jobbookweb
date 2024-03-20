@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import html2pdf from 'html2pdf.js';
 import './Styles.css'
 import Modal from '../../../Components/Createresumemodal';
+import { toast } from 'react-toastify';
+import { saveAs } from 'file-saver';
 
 function Resumecontent() {
     const [formData, setFormData] = useState({
@@ -80,12 +82,19 @@ function Resumecontent() {
     
             const data = await response.json();
             console.log('Success:', data);
+            toast.success("Resume Generate Successfully ")
+            downloadResume(data); // Call the function to download the resume
             closeModal(); // Assuming you want to close the modal upon successful API call
         } catch (error) {
             console.error('Error:', error);
         }
     };
     
+
+    const downloadResume = (data) => {
+        const resumeBlob = new Blob([data], { type: 'application/pdf' }); // Assuming the response data is in PDF format
+        saveAs(resumeBlob, 'resume.pdf'); // Trigger download using file-saver library
+    };
 
 
     return (

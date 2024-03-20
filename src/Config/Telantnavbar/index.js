@@ -66,7 +66,7 @@ function TalentNav() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to={'/companyseachpage'} className="nav-link" href="#">
+                                <Link to={'/companytalentsearchpage'} className="nav-link" href="#">
                                     Talent search
                                 </Link>
                             </li>

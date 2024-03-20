@@ -19,6 +19,7 @@ function Jobcontent() {
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
     const [isApplied, setIsApplied] = useState(false);
+    
 
 
     useEffect(() => {
@@ -29,18 +30,24 @@ function Jobcontent() {
             const token = localStorage.getItem("token");
             const userType = localStorage.getItem("userType");
 
-            const baseURL =
-                userType === "company"
+            let baseURL = `${baseurl}/talent/home/allJobs`; // Default URL for unauthenticated users
+
+            // If both token and userType exist, adjust the baseURL accordingly
+            if (token && userType) {
+                baseURL = userType === "talent"
                     ? `${baseurl}/company/home/jobs`
-                    : `${baseurl}/talent/home/jobs`;
+                    : `${baseurl}/talent/home/jobs`
+            }
 
             try {
-                const response = await axios.get(baseURL, {
+                const config = token ? {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                });
+                } : {};
+
+                const response = await axios.get(baseURL, config);
                 setJobsData(response.data.data); // Adjust according to your API response
                 console.log("Data ====>>>", response.data.data)
 

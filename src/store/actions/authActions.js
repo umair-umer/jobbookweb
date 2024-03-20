@@ -1,7 +1,14 @@
-export const setAuthInfo = (token, userType) => {
+export const setAuthInfo = (token, userType,userId) => {
   return {
     type: 'SET_AUTH_INFO',
-    payload: { token, userType },
+    payload: { token, userType, userId },
+  };
+};
+
+export const setUserType = (userType) => {
+  return {
+    type: 'SET_USER_TYPE',
+    payload: userType,
   };
 };
 export const setGoogleToken = (token) => ({

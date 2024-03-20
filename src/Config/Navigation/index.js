@@ -63,9 +63,8 @@ function Nav() {
         localStorage.removeItem("token");
         localStorage.removeItem("userAvatar");
         setIsLoadingLogout(false); // Stop loading
-
-        // navigate('/', { replace: true }); // Navigate or reload
-        window.location.reload(); // If you want to reload the page
+        window.location.reload(); // Reload the page
+        navigate("/")
       })
       .catch((error) => {
         console.error(error);
@@ -150,8 +149,8 @@ function Nav() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/resume"} className="nav-link ms-3 " href="#">
-                  Create Resume
+                <Link to={"/resume"} className="nav-link  " href="#">
+                 <li> {token ? "Create Resume" : ""}</li> 
                 </Link>
               </li>
 
@@ -196,6 +195,7 @@ function Nav() {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  
                 >
                   <img src={avatar} width="20" height="20" alt="profile" />
                 </a>
@@ -203,7 +203,6 @@ function Nav() {
                   className="dropdown-menu dropdown-menu-bg-light" style={{ background: "#15bdac" }} aria-labelledby="dropdownMenuButton2"
 
                 >
-                  {/* <li><a className="dropdown-item" href="#" onClick={triggerFileInput}>Change Image</a></li> */}
                   <Link to={"/companysignup"}>
                     <li className="box">
                       <a className="dropdown-item  " onClick={Handleparamscomapany}  >Signup as an company </a>

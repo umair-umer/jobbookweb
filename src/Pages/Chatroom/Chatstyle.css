@@ -1,0 +1,48 @@
+/* In App.css or respective component CSS files */
+.chat-app {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #f10d0d;
+    border-radius: 5px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    word-break: break-all;
+  }
+  
+  form {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    background-color: #364e4d;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  button:hover {
+    background-color: #215c4d;
+  }
+
+  
+  
+
+  

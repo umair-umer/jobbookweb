@@ -49,20 +49,24 @@ function Loginfrompage() {
   
     try {
       const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
+      console.log(JSON.stringify(response.data.user.id,"olikyhjsdhgs"));
       toast.success("Login Successfully ");
 
       // Assuming the response contains the token you need to store
-      localStorage.setItem("token", response.data.token); // Adjust according to your response structure
+      localStorage.setItem("token", response.data.token); 
+      localStorage.setItem("id",response.data.user.id); 
+      
+      
+    
       
       // Update Redux store
-      dispatch(setAuthInfo(response.data.token, response.data.userType));
+      dispatch(setAuthInfo(response.data.token, response.data.userType,response.data.user.id));
 
       // Navigate to the home page
       navigate("/");
     } catch (error) {
       toast.error(error);
-      toast.error("Login failed: " + (error.response?.data.message || "Unknown error"));
+      toast.error("Login failed: " + (error.response?.data.message || "network error"));
     } finally {
       setIsLoggingIn(false);
     }

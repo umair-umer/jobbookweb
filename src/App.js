@@ -25,6 +25,8 @@ import Appliedjobs from "./Pages/Appliedjobs/index.js";
 import Rejectedjobs from "./Pages/Rejectedjobs/index.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PendingJobs from "./Talentsearchpages/Pendingjobs/index.js";
+import SendMessageForm from "./Pages/Chatroom/index.js";
 
 // Dummy authentication check (replace with your actual logic)
 const isAuthenticated = localStorage.getItem("token");
@@ -48,13 +50,16 @@ function App() {
         <Route path="/resume" element={<CreateResumepage />} />
         <Route path="/job" element={<Jobpage />} />
         <Route path="/comapnytrainingpage" element={<TalentTraining />} />
-        <Route path="/companyseachpage" element={<Talentsearch />} />
+        <Route path="/companytalentsearchpage" element={<Talentsearch />} />
         <Route path="/companypremiumpage" element={<Talentpremium />} />
         <Route path="/jobpost" element={<TalentPostpage />} />
         <Route path="/userprofile/:userId" element={<Profilesscreen />} />
         <Route path="/savejobs" element={<Savejobs />} />
         <Route path="/Appliedjobs" element={<Appliedjobs />} />
+        <Route path="/Penddingjobs" element={<PendingJobs />} />
         <Route path="/rejectedjobs" element={<Rejectedjobs />} />
+        <Route path="/chatroom" element={<SendMessageForm />} />
+
 
 
 

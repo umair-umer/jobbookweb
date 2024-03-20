@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import LOGO from "../../Assests/logo.png";
 import SideImg from "../../Assests/loginsideimg.png";
 import IMG from "../../Assests/imagelogin.png";
@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux';
 import { setAuthInfo } from '../../store/actions/authActions';
 import Loader from '../../Components/Loader';
 import { baseurl } from '../../Config/utilites';
+import TypeContext from '../../Components/ContextApi';
+import { useLocation } from 'react-router-dom';
 
 function Loginfromcompanypage() {
   const navigate = useNavigate();
@@ -22,17 +24,24 @@ function Loginfromcompanypage() {
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+
+  const location = useLocation();
+  const { type } = location.state || {};
+  const { setType } = useContext(TypeContext);
   const dispatch = useDispatch();
+
+  
+  useEffect(() => {
+    if (type) {
+      localStorage.setItem('userType', type); // Store type in localStorage
+      dispatch(setType(type)); // Update Redux store
+      setType(type); // If using context, set the type here as well
+    }
+  }, [type, dispatch, setType]);
+
+
   const handleLogin = async (e) => {
     const { token, role } = handleLogin;
-
-    // Store token and userType in localStorage for persistence across sessions
-    localStorage.setItem('token', token);
-    localStorage.setItem('userType', role);
-    console.log("userType",role)
-  
-    // Update Redux store
-    dispatch(setAuthInfo(token, role));
 
     e.preventDefault(); // Prevent default form submission
     if (isLoggingIn) return;

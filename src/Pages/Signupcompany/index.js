@@ -12,12 +12,14 @@ import axios from "axios";
 import Loader from "../../Components/Loader";
 import { baseurl } from "../../Config/utilites";
 import { toast } from 'react-toastify';
+import { setUserType } from "../../store/actions/authActions";
+
 
 
 function Signupfromcompanypage() {
   const location =useLocation();
   const {type}=location.state || {};
-  console.log("type",type);
+  console.log("type",setUserType);
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,7 +63,7 @@ function Signupfromcompanypage() {
       );
      
       toast.success("Register successful :)",data);
-      navigate("/companylogin"); // Corrected navigation
+      navigate("/companylogin", { state: { type: setUserType } });
     } catch (error) {
       toast.error(error);
       console.log("An error occurred during sign up.");

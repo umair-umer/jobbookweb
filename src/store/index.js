@@ -6,7 +6,7 @@ import rootReducer from './reducers'; // Assuming you have a root reducer
 const persistedState = {
   auth: {
     token: localStorage.getItem('token'),
-    userType: localStorage.getItem('userType'),
+    userType: localStorage.getItem('userRole'),
   },
   // other initial state if needed
 };

@@ -16,6 +16,7 @@ function PostJobContentHere() {
   const toggleModal = () => setIsOpen(!isOpen);
 
   const { jobId } = useParams();
+  console.log("jobID===>>",jobId)
   useEffect(() => {
     const fetchJobs = async () => {
       setIsLoading(true);
@@ -54,28 +55,28 @@ function PostJobContentHere() {
 
 
 
-  const handleViewDetailClick = async (jobId) => {
-    // const token = localStorage.getItem("token");
-    //   const userType = localStorage.getItem("userType");
-    // setIsLoading(true);
-    // const baseURL =
-    // userType === "company"
-    //   ? `${baseurl}/company/home/stats/${jobId}`
-    //   : `${baseurl}/talent/home/jobs`;
-    // try {
-    //   const response = await axios.get(`${baseURL}`,{
-    //     headers: {
-    //       "Authorization": `Bearer ${token}`,
-    //     },
-    //   });
-    //   setCurrentJobDetails(response.data);
-    //   setIsOpen(true); // Show the modal after data is fetched
-    // } catch (error) {
-    //   console.error("Failed to fetch job details:", error);
-    //   setError(error.toString());
-    // } finally {
-    //   setIsLoading(false);
-    // }
+  const handleViewDetailClick = async (event, jobId) => {
+    const token = localStorage.getItem("token");
+      const userType = localStorage.getItem("userType");
+    setIsLoading(true);
+    const baseURL =
+    userType === "company"
+      ? `${baseurl}/company/home/stats/${jobId}`
+      : `${baseurl}/talent/home/jobs`;
+    try {
+      const response = await axios.get(`${baseURL}`,{
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      setCurrentJobDetails(response.data);
+      setIsOpen(true); // Show the modal after data is fetched
+    } catch (error) {
+      console.error("Failed to fetch job details:", error);
+      setError(error.toString());
+    } finally {
+      setIsLoading(false);
+    }
   };
 
 
@@ -136,7 +137,7 @@ function PostJobContentHere() {
                         padding: "12px 0",
                         color: "#fff",
                       }}
-                      onClick={handleViewDetailClick}
+                      onClick={(e) => handleViewDetailClick(e, job._id)}
                     >
                       <p>View detail</p>
                     </div>

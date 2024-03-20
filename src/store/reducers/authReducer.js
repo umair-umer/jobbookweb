@@ -13,16 +13,22 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: action.payload.token,
         userType: action.payload.userType,
+        userId:action.payload.userId,
       };
       case 'SET_GOOGLE_TOKEN':
       return { 
         ...state, 
         googleToken: action.payload };
-      case 'SET_USER_ID':
-      return {
-        ...state,
-        userId: action.payload
-      };
+      // case 'SET_USER_ID':
+      // return {
+      //   ...state,
+      //   userId: action.payload
+      // };
+      case 'SET_USER_TYPE':
+        return {
+          ...state,
+          userType: action.payload,
+        };
     default:
       return state;
   }
