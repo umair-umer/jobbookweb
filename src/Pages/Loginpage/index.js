@@ -54,7 +54,7 @@ function Loginfrompage() {
 
       // Assuming the response contains the token you need to store
       localStorage.setItem("token", response.data.token); 
-      localStorage.setItem("id",response.data.user.id); 
+      localStorage.setItem("user",response.data.user.id); 
       
       
     

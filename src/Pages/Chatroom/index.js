@@ -1,36 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chatstyle.css'
-import { Imagebaseurl,baseurl } from '../../Config/utilites';
+import { Imagebaseurl, baseurl } from '../../Config/utilites';
 import TalentNav from '../../Config/Telantnavbar';
 import Footer from '../../Components/Footer'
 import axios from 'axios';
-import ChatApp from '../../Components/Chatcomponent';
 import io from 'socket.io-client';
+import Nav from '../../Config/Navigation';
 
-   //sokets states
-   const userId101 = localStorage.getItem("user");
+//sokets states
+const socket = io('https://jobbookbackend.azurewebsites.net');
 
-
-   const socket = io('https://jobbookbackend.azurewebsites.net');
-   
-
-
-
-
-function SendMessageForm({ onSendMessage }) {
-    // const userId = useSelector((state) => state.auth);
+function SendMessageForm() {
     const userId = localStorage.getItem("user");
+    const userRole = localStorage.getItem("userRole");
+    console.log("userRole", userRole)
     const currentUserId = userId;
-    socket.on('ADD_USER', userId);
+    // socket.on('ADD_USER', userId);
     // console.log("id", userId)
     const [chatHistory, setChatHistory] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [chats, setChats] = useState([]);
-    
+
     const [message, setMessage] = useState('');
-   const [chat, setChat] = useState([]);
+    const [room, setRoom] = useState({})
+    const [roomId,setRoomId]  = useState()
+    const [receiverId, setReceiverId] = useState()
 
 
+    
     // get All user api
     useEffect(() => {
         // Function to fetch messages from the API
@@ -67,7 +64,9 @@ function SendMessageForm({ onSendMessage }) {
 
 
     //fetch api msgs
-    const fetchChatHistory = async (chatId) => {
+    const fetchChatHistory = async (chatId, receiverId) => {
+        socket.emit("JOIN_CHAT", chatId)
+
         const token = localStorage.getItem("token");
         setIsLoading(true);
         try {
@@ -76,8 +75,15 @@ function SendMessageForm({ onSendMessage }) {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            setChatHistory(response.data); // Assuming response.data holds the chat history
+            setChatHistory(response.data.data.chatHistory); // Assuming response.data holds the chat history
+
             // console.log("response", response)
+            // console.log("Room",room);
+            console.log("RoomID",room._id);
+            setRoom(response.data.data.chat)
+            setRoomId(chatId)
+            setReceiverId(receiverId)
+
             // console.log(chatId,"sdffasdfafaf")
 
         } catch (error) {
@@ -87,47 +93,59 @@ function SendMessageForm({ onSendMessage }) {
         }
     };
 
- // Sokets functions
 
+  
+
+    // Sokets functions
     useEffect(() => {
         // Listen for incoming messages
-        socket.on('RECEIVE_MESSAGE', function(data) {
-          setChatHistory([...chatHistory, data]);
+        socket.on('RECEIVE_MESSAGE', function (data) {
+            setChatHistory([...chatHistory, data]);
         });
-      }, [chatHistory]);
-    
-      const sendMessage = (e, chatId) => {
+    }, [chatHistory]);
+
+    const sendMessage = (e) => {
+        console.log("ddddddddd")
+        if(message == "" ){
+            return
+        }
+      
+        // const receiverId = room.participants.filter(i => i._id != currentUserId)._id
+        // console.log("receiverId", receiverId);
         e.preventDefault();
         // Send message to the server
         socket.emit('SEND_MESSAGE', {
-            chatId:"65fa18c7ebad3b348503f316",
-            senderId:userId,
-            receiverId:"65b3d1fe9c10c930b1e15abf",
-            content:message
+            
+            chatId: roomId,
+            senderId: userId,
+            receiverId: receiverId,
+            content: message
         });
         setMessage('');
-      };
+    };
+
+    // console.log("chatHiistory",chatHistory)
 
     return (
         <>
-            <TalentNav />
+            {userRole !== "company" ? <Nav /> : <TalentNav />}
             <div className='container-fluid my-5'>
                 <div className="row">
                     <div className="col-sm-5 mb-3 mb-sm-0">
                         <div className="card">
-                            <div className="card-body">
+                            <div className="card-body chat-main-container">
                                 <h3 className="header card-title text-start">Messages</h3>
                                 {chats.map((item, index) => (
-                                    <ul key={index} onClick={() => fetchChatHistory(item._id)}> {/* Replace item._id with your chatId */}
+                                    <ul key={index} onClick={() => fetchChatHistory(item._id, item.participants.filter(i => i._id !== userId)[0]._id )}> {/* Replace item._id with your chatId */}
                                         <li className='text-start my-3'>
                                             <div style={{ display: "flex", flexDirection: "row" }}>
                                                 <img
                                                     className="mx-2 my-2"
                                                     src={`${Imagebaseurl}${item.participants.filter(i => i._id !== userId)[0].picture}`}
                                                     alt="Profile"
-                                                    style={{ width: "5%", height: "5%", borderRadius: "10px" }}
+                                                    style={{ width: "4%", height: "4%", borderRadius: "10px" }}
                                                 />
-                                                <p className='mx-2 my-2' style={{ fontSize: 18 }}>
+                                                <p className='mx-2 my-2 active-messages' style={{ fontSize: 18 }}>
                                                     {item.participants.filter(i => i._id !== userId)[0].name}
                                                 </p>
                                             </div>
@@ -139,19 +157,20 @@ function SendMessageForm({ onSendMessage }) {
                     </div>
                     <div className="col-sm-6">
                         <div className="card">
-                            <div className='chat-container'>
+                            <div className='chat-container chat-main-container'>
                                 <div className="message-list">
                                     <div className="chat-history">
-                                        {chatHistory?.data?.map((msg, index) => {
-                                         
-                                            const isCurrentUser = msg.senderId._id == currentUserId; 
+                                        {chatHistory?.map((msg, index) => {
+
+                                            const isCurrentUser = msg.senderId._id == currentUserId;
+                                            // console.log("msg", msg);
                                             const messageClass = isCurrentUser ? 'message-right' : 'message-left';
 
                                             return (
-                                                <div key={index} className={`message-item ${messageClass}`}>
-                                                    {isCurrentUser == msg.senderId._id ?  <img  src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
-                                                     :                <img  src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar" />}
-                                                    
+                                                <div key={index} className={`message-item my-2 ${messageClass}`}>
+                                                    {isCurrentUser == msg.senderId._id ? <img src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
+                                                        : <img src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar mx-2" />}
+
                                                     <p className={isCurrentUser ? 'text-end' : 'text-start'}>{msg?.content}</p>
                                                 </div>
                                             );
@@ -161,10 +180,10 @@ function SendMessageForm({ onSendMessage }) {
 
                                 </div>
                                 <form className="message-form" onSubmit={sendMessage}>
-                                   
+
                                     <input
                                         type="text"
-                                        placeholder="Type a message..." 
+                                        placeholder="Type a message..."
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
                                     />

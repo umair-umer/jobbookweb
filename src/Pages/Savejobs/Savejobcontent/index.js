@@ -71,9 +71,9 @@ function Savejobscontent() {
                       </div>
                     </div>
                   </div>
-                  <div className='aloo'>
+                  {/* <div className='aloo'>
                     <a href={job.link || '#'} className="btn btn-success supply">View Job</a>
-                  </div>
+                  </div> */}
                 </div>
                 <p className="text-end my-2 text-black text-end ms-3">{job.salaryMode} {job.travel}</p>
               </div>

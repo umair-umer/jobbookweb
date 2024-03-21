@@ -7,7 +7,6 @@ import axios from "axios";
 import { baseurl } from "../../Config/utilites";
 import Loader from '../../Components/Loader'
 import moment from 'moment';
-import GOOGLE from '../../Assests/google.png'
 
 
 function Nav() {
@@ -38,7 +37,7 @@ function Nav() {
           setNotifications(data.data.notification);
           console.log("notification data", data.data.notification[0])
           console.log("notification data ===>>>", data.data.notification[0].title)
-        
+
 
 
         } else {
@@ -56,12 +55,14 @@ function Nav() {
     setIsLoadingLogout(true); // Start loading
 
     const token = localStorage.getItem('token');
+     localStorage.getItem("user");
     axios.post(`${baseurl}/auth/logout`, {}, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(() => {
         localStorage.removeItem("token");
-        localStorage.removeItem("userAvatar");
+        localStorage.removeItem("user");
+   
         setIsLoadingLogout(false); // Stop loading
         window.location.reload(); // Reload the page
         navigate("/")
@@ -81,23 +82,7 @@ function Nav() {
     }, 3000);
   }
 
-//   let date = moment();
-//   let duration = moment().diff(date,date)
-//   let diff = moment(duration).format('YYYY-MM-DD')
-
-//   var before = moment('2017.02.12 09:00','YYYY.MM.DD HH:mm');
-// var now = moment();
-
-
-//   let curtDate = moment(now - before).format('D[ day(s)] H[ hour(s)] m[ minute(s)] s[ second(s) ago.]')
-
-
-
-// let dateOne = moment([2024, 3, 10]);
-// let dateTwo = moment([2001, 10, 28]);
- 
-// Function call
-// let result = dateOne.fromNow() 
+  
 
   return (
     <>
@@ -150,16 +135,23 @@ function Nav() {
               </li>
               <li className="nav-item">
                 <Link to={"/resume"} className="nav-link  " href="#">
-                 <li> {token ? "Create Resume" : ""}</li> 
+                  <li> {token ? "Create Resume" : ""}</li>
                 </Link>
               </li>
 
+              <li className="nav-item">
+                <Link to={"/chatroom"} className="nav-link  " href="#">
+                {token && ( <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                    <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                  </svg></li>)}
+                </Link>
+              </li>
 
-            </ul>
-            <form className="d-flex" role="search">
+              <li className="nav-item">
               {isLoadingLogout && <div><Loader /></div>}
               <div className="dropdown">
-            {  token && ( <button style={{ borderColor: "transparent" }} onClick={fetchNotifications}   className="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                {token && (<button style={{ borderColor: "transparent" }} onClick={fetchNotifications} className="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16" style={{ color: "rgb(24 187 171)", marginTop: "5px", marginRight: "5px" }}>
                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901" />
                   </svg>
@@ -168,25 +160,25 @@ function Nav() {
                   {notifications.map((notification) => (
                     <li key={notification._id}>
                       <a className="dropdown-item text-white text-b">
-                        <img src={"https://app.jobbooks.app/uploads/assets/lpxyks4sam9l6tl9jrur.png"} style={{width:"8%",height:"8%",marginRight:"10px"}}/>
-                        {notification.title} 
+                        <img src={"https://app.jobbooks.app/uploads/assets/lpxyks4sam9l6tl9jrur.png"} style={{ width: "8%", height: "8%", marginRight: "10px" }} />
+                        {notification.title}
                       </a>
-                      <a className="dropdown-item text-white" style={{fontSize:"13px"}}>
-                        {notification.message} 
+                      <a className="dropdown-item text-white" style={{ fontSize: "13px" }}>
+                        {notification.message}
                       </a>
 
-                      <a className="dropdown-item text-white text-end" style={{fontSize:"13px"}}>
-                        {moment(notification.createdAt).fromNow()} 
+                      <a className="dropdown-item text-white text-end" style={{ fontSize: "13px" }}>
+                        {moment(notification.createdAt).fromNow()}
                       </a>
-                      <hr/>
+                      <hr />
 
                     </li>
                   ))}
                 </ul>
 
               </div>
-            </form>
-            <ul className="navbar-nav">
+              </li>
+              <ul className="navbar-nav">
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -195,7 +187,7 @@ function Nav() {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                  
+
                 >
                   <img src={avatar} width="20" height="20" alt="profile" />
                 </a>
@@ -220,6 +212,9 @@ function Nav() {
                 </ul>
               </li>
             </ul>
+            </ul>
+      
+           
           </div>
         </div>
       </nav>

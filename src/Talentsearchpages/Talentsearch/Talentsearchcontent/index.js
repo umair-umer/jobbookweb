@@ -83,15 +83,16 @@ function Talentsearchcontent() {
                     </span>
                   </h5>
                 </div>
-                <Link to={'/chatroom'} style={{ textDecoration: "none", margin: "15px 0 0 auto" }} >
+                <Link to={'/chatroom'} style={{ textDecoration: "none", margin: "25px 0px 0px auto" }} >
                   <div 
             
 
                      style={{
 
                       borderRadius: "10px",
-                      padding: "13px 0",
+                      padding: "5px 10px",
                       color: "#fff",
+                      background: "#000",
                     }}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
