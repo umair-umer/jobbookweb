@@ -92,7 +92,7 @@ function Talentsearchcontent() {
                       borderRadius: "10px",
                       padding: "5px 10px",
                       color: "#fff",
-                      background: "#000",
+                      background: "rgb(0, 80, 73)",
                     }}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">

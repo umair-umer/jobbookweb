@@ -23,11 +23,11 @@ function SendMessageForm() {
 
     const [message, setMessage] = useState('');
     const [room, setRoom] = useState({})
-    const [roomId,setRoomId]  = useState()
+    const [roomId, setRoomId] = useState()
     const [receiverId, setReceiverId] = useState()
 
 
-    
+
     // get All user api
     useEffect(() => {
         // Function to fetch messages from the API
@@ -79,7 +79,7 @@ function SendMessageForm() {
 
             // console.log("response", response)
             // console.log("Room",room);
-            console.log("RoomID",room._id);
+            console.log("RoomID", room._id);
             setRoom(response.data.data.chat)
             setRoomId(chatId)
             setReceiverId(receiverId)
@@ -94,7 +94,7 @@ function SendMessageForm() {
     };
 
 
-  
+
 
     // Sokets functions
     useEffect(() => {
@@ -106,16 +106,16 @@ function SendMessageForm() {
 
     const sendMessage = (e) => {
         console.log("ddddddddd")
-        if(message == "" ){
+        if (message == "") {
             return
         }
-      
+
         // const receiverId = room.participants.filter(i => i._id != currentUserId)._id
         // console.log("receiverId", receiverId);
         e.preventDefault();
         // Send message to the server
         socket.emit('SEND_MESSAGE', {
-            
+
             chatId: roomId,
             senderId: userId,
             receiverId: receiverId,
@@ -136,9 +136,9 @@ function SendMessageForm() {
                             <div className="card-body chat-main-container">
                                 <h3 className="header card-title text-start">Messages</h3>
                                 {chats.map((item, index) => (
-                                    <ul key={index} onClick={() => fetchChatHistory(item._id, item.participants.filter(i => i._id !== userId)[0]._id )}> {/* Replace item._id with your chatId */}
+                                    <ul key={index} onClick={() => fetchChatHistory(item._id, item.participants.filter(i => i._id !== userId)[0]._id)}> {/* Replace item._id with your chatId */}
                                         <li className='text-start my-3'>
-                                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}>
                                                 <img
                                                     className="mx-2 my-2"
                                                     src={`${Imagebaseurl}${item.participants.filter(i => i._id !== userId)[0].picture}`}
@@ -156,7 +156,7 @@ function SendMessageForm() {
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <div className="card">
+                        <div className="card"> 
                             <div className='chat-container chat-main-container'>
                                 <div className="message-list">
                                     <div className="chat-history">
@@ -179,16 +179,19 @@ function SendMessageForm() {
 
 
                                 </div>
-                                <form className="message-form" onSubmit={sendMessage}>
-
-                                    <input
-                                        type="text"
-                                        placeholder="Type a message..."
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                    />
-                                    <button type="submit">Send</button>
-                                </form>
+                                <div style={{position:"sticky", bottom:"0"}}>
+                                    <div>
+                                        <form className="message-form" onSubmit={sendMessage}>
+                                            <input
+                                                type="text"
+                                                placeholder="Type a message..."
+                                                value={message}
+                                                onChange={(e) => setMessage(e.target.value)}
+                                            />
+                                            <button type="submit">Send</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

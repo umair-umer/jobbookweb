@@ -71,7 +71,7 @@ button:hover {
 .message-right p,
 .message-left p {
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: #d6d4d4;
 }
 
@@ -91,12 +91,14 @@ button:hover {
 }
 
 .message-item.message-left p.text-start {
-  background-color: #25B1A4;
+  background-color: #5fbfb6;
   color: #fff;
+  padding: 12px 25px;
+  clip-path: polygon(11% 0, 100% 0, 100% 100%, 0 100%, 11% 81%);
 }
 
 .message-item.message-right p.text-end {
-  background-color: transparent;
-  background-color: #62aca4;
-  color: #fff;
+  background-color: #d3d1d1;
+  color: #000;
+  padding: 12px 25px;
 }
