@@ -1,0 +1,6 @@
+.newfeedinput{
+    background-color: #1b5953 !important;
+}
+.newfeedinput::placeholder{
+    color: #fff;
+}

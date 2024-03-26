@@ -200,7 +200,7 @@ function Footer() {
                         className="text-center p-3"
                         style={{ backgroundColor: "#005049", fontWeight: "bold" }}
                     >
-                        © 2020 Copyright:
+                        © 2024 Copyright:
                         {/* <a className="text-white" href="#"> */}
                         jobbook.com
                         {/* </a> */}

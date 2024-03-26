@@ -1,0 +1,104 @@
+/* JobPostForm.css */
+
+.job-post-container, .job-post-form {
+  background-color: #15655e  ;
+  color: white;
+  padding: 20px;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.job-post-form{
+  flex-direction: column;
+}
+
+.form-column label {
+  margin-bottom: 5px;
+  margin-left: 10px;
+  text-align: start;
+}
+
+.form-column input[type='text'],
+.form-column input[type='file'],
+.form-column textarea {
+  background-color: #1b5953;
+  color: white;
+  border-radius: 50px;
+  padding: 20px;
+  margin-bottom: 10px;
+  border: none;
+}
+
+.form-column input[type='text']::placeholder,
+.form-column input[type='file'],
+.form-column textarea::placeholder{
+  color: #fff;
+}
+
+.form-column textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.form-column .form-control{
+  background: #1b5953;
+}
+
+.form-column .form-control:focus-visible{
+  outline: 0;
+  box-shadow: none;
+}
+
+.photo-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photo-preview {
+  position: relative;
+  display: inline-block;
+}
+
+.photo-preview img {
+  width: auto;
+  height: 100px;
+  border-radius: 5px;
+}
+
+.remove-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background-color: #fff;
+  color: #1b5953;
+  padding: 10px 75px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  align-self: center;
+  font-size: 18px;
+  transition: .4s;
+}
+
+.submit-btn:hover{
+  background-color: #1b5953;
+  color: #fff;
+}
+
+.end-submit-but-main{
+  display: flex;
+}

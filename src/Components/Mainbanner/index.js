@@ -31,8 +31,8 @@ function MainBanner() {
     <>
       <div className="card main">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-sm-6 mb-3 mb-sm-0 " style={{ marginTop: 85 }}>
+          <div className="row reversing-banner align-items-center">
+            <div className="col-sm-6 mb-3 mb-sm-0 minus-topping-banner">
               <div className="card-body ">
                 <h1
                   className="card-title big  rotate-on-hover"
@@ -115,7 +115,7 @@ function MainBanner() {
                   />
                 </AnimateKeyframes>
 
-                <h1 className="card-title text-center jobtext">JOBBOOK</h1>
+                <h1 className="card-title text-center jobtext">JOBBOOKS</h1>
               </div>
             </div>
           </div>

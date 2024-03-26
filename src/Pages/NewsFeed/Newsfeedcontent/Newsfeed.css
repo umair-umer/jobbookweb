@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+
+.tips_sec h4 {
+    color: #2D5B57;
+    font-family: 'Mulish', sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-bottom: 20px;
+}
+.post_bottom_box ul{
+    justify-content:space-between;
+    padding: 0 50px !important;
+}
+.tips_sec {
+    padding: 70px 0;
+}
+
+.tips_box_main {
+    background-image: url(../../../Assests/tipsbox.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 328px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 50px;
+}
+
+.tips_sec {
+    padding: 70px 0;
+}
+
+.tips_box_main h6 {
+    font-family: 'Mulish';
+    color: #fff;
+    font-size: 38px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.tips_box_main p {
+    font-family: 'Mulish';
+    font-size: 35px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.post_box {
+    background: #63C8BE;
+    border-radius: 30px;
+    margin-bottom: 100px;
+}
+
+.img_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 55px 0px;
+}
+
+.img_box h6 {
+    padding-left: 20px;
+    font-family: 'Mulish';
+    color: #ffff;
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.img_box p {
+    font-family: 'Mulish';
+    color: #fff;
+    padding-left: 30px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+
+.img_box p span {
+    color: #0DFFE8;
+    font-size: 30px;
+    border-radius: 50px;
+}
+
+.post_box p {
+    font-family: 'Mulish';
+    color: #fff;
+    padding-left: 50px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+
+.post_botom_box ul {
+    display: flex;
+    flex-direction:row;
+    list-style: none;
+    margin: 0;
+    justify-content: space-between;
+    padding-left: 0;
+}
+
+.post_botom_box {
+    background: #E9E9E9;
+    border-radius: 0px 0px 27px 27px;
+    padding: 25px 80px 20px 100px;
+}
+
+.post_botom_box a img {
+    width: 26%;
+    margin-right: 9px;
+}
+
+.post_botom_box a {
+    text-decoration: none;
+    color: #2D5B57;
+    font-family: 'Mulish';
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: stretch;
+}
+
+/* font-family: 'Mulish', sans-serif; */

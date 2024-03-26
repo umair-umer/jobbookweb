@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Traninginnerstyle.css';
+import './Newsfeed.css';
 import axios from 'axios';
 import POSTIMG from "../../../Assests/postimg.png"
 import thumb from "../../../Assests/thumb.png"
@@ -10,7 +10,7 @@ import { Imagebaseurl, baseurl } from '../../../Config/utilites';
 
 
 
-function TrainingTabs() {
+function FeedsTabs() {
     const [activeTab, setActiveTab] = useState('popular');
     const [forumData, setForumData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -107,7 +107,7 @@ function TrainingTabs() {
     );
 }
 
-export default TrainingTabs;
+export default FeedsTabs;
 
 
 

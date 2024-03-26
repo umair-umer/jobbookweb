@@ -17,9 +17,8 @@ function Jobcontent() {
     const [jobsData, setJobsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isSaved, setIsSaved] = useState(false);
-    const [isApplied, setIsApplied] = useState(false);
-    
+    const token = localStorage.getItem("token");
+
 
 
     useEffect(() => {
@@ -27,16 +26,10 @@ function Jobcontent() {
             setIsLoading(true);
             setError(null);
 
-            const token = localStorage.getItem("token");
-            const userType = localStorage.getItem("userType");
+            let baseURL = `${baseurl}/talent/home/allJobs`;
 
-            let baseURL = `${baseurl}/talent/home/allJobs`; // Default URL for unauthenticated users
-
-            // If both token and userType exist, adjust the baseURL accordingly
-            if (token && userType) {
-                baseURL = userType === "talent"
-                    ? `${baseurl}/company/home/jobs`
-                    : `${baseurl}/talent/home/jobs`
+            if (token) {
+                baseURL = `${baseurl}/talent/home/jobs`
             }
 
             try {
@@ -48,8 +41,7 @@ function Jobcontent() {
                 } : {};
 
                 const response = await axios.get(baseURL, config);
-                setJobsData(response.data.data); // Adjust according to your API response
-                console.log("Data ====>>>", response.data.data)
+                setJobsData(response.data.data);
 
                 setIsLoading(false);
             } catch (error) {
@@ -61,66 +53,33 @@ function Jobcontent() {
         fetchJobs();
     }, []);
 
-    if (isLoading) {
-        return <Loader />;
-    }
+    if (isLoading) return <Loader />;
+    if (error) return <div>Error loading jobs.</div>;
+    if (jobsData.length === 0) return <div>No jobs found.</div>;
 
-    if (error) {
-        return <Loader />;
-    }
-
-    if (jobsData.length === 0) {
-        return <div>No jobs found.</div>; // Corrected message
-    }
-
-
-    const handleJobClick = (job) => {
-
-        setSelectedJob(job);
-    };
-    const handleApplyClick = () => {
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    const handleJobClick = (job) => setSelectedJob(job);
+    const handleApplyClick = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
 
     const saveToggleJob = async () => {
-        const token = localStorage.getItem("token");
-        const action = "save"; // Or "save", depending on the context
+        const action = "save";
         const url = `${baseurl}/talent/home/saveToggle/${selectedJob._id}?action=${action}`;
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
         };
-        const body = JSON.stringify({
-            "action": "save" // Adjust based on the current state or user action
-        });
+        const body = JSON.stringify({ "action": "save" });
 
         try {
-            const response = await fetch(url, {
-                method: 'POST', // HTTP method
-                headers: headers, // HTTP headers
-                body: body, // request body
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json(); // Assuming the server responds with JSON
-                console.log(data);
-                toast.success('Job save successfully'); // Notify the user
-                navigate('/savejobs');
-            }
+            const response = await fetch(url, { method: 'POST', headers, body });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            toast.success('Job saved successfully');
+            navigate('/savejobs');
         } catch (error) {
             console.error('Error:', error);
-            // Optionally, display an error toast
-            toast.error(' Already save job');
+            toast.error('Error saving job');
         }
     };
-
-
 
 
 
@@ -191,20 +150,17 @@ function Jobcontent() {
                                     </div>
                                 </div>
 
-                                {selectedJob && (
-
-                                    <>
-                                        <Button variant='success' className='recent me-3' onClick={saveToggleJob} >
-                                        {selectedJob.saved ? 'Saved' : 'Save'}
-                                        </Button>
-                                        {/* Your existing buttons and modals... */}
-                                    </>
-                                )}
-                                {selectedJob && (
-                                    <Button variant='success' className='recent mx-2' onClick={handleApplyClick}>
-                                        {selectedJob.applied ? 'Applied' : 'Apply'}
+                                {token && (
+                                    <Button  variant='success' className='recent mx-2'  onClick={saveToggleJob} disabled={selectedJob?.saved}>
+                                        {selectedJob?.saved ? 'Unsave' : 'Save'}
                                     </Button>
                                 )}
+                                {token && (
+                                    <Button  variant='success' className='recent mx-2'  onClick={handleApplyClick} disabled={selectedJob?.applied}>
+                                        {selectedJob?.applied ? 'Applied' : 'Apply'}
+                                    </Button>
+                                )}
+
                                 <div className='d-flex my-3 '>
                                     <div className='view'>
                                         <h6 className='card-title text-start mx-3'>Job</h6>

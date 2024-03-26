@@ -22,7 +22,7 @@ function PostJobContentHere() {
       setIsLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
-      const userType = localStorage.getItem("userType");
+      const userType = localStorage.getItem("userRole");
       console.log("type",userType)
 ;
       const baseURL =
@@ -50,6 +50,7 @@ function PostJobContentHere() {
 
   const handleJobClick = (job) => {
     console.log("Job clicked", job);
+     localStorage.setItem('currentJobId', job._id);
     // Implement your logic here
   };
 
@@ -57,7 +58,7 @@ function PostJobContentHere() {
 
   const handleViewDetailClick = async (event, jobId) => {
     const token = localStorage.getItem("token");
-      const userType = localStorage.getItem("userType");
+      const userType = localStorage.getItem("userRole");
     setIsLoading(true);
     const baseURL =
     userType === "company"

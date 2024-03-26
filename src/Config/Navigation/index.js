@@ -123,6 +123,8 @@ function Nav() {
                   Jobs
                 </Link>
               </li>
+
+              
               <li className="nav-item">
                 <Link to={"/training"} className="nav-link" href="#">
                   Training
@@ -133,11 +135,27 @@ function Nav() {
                   Premium
                 </Link>
               </li>
+
+              <li className="nav-item">
+                <Link to={"/Newforums"} className="nav-link  " href="#">
+                  <li> {token ? " Forums" : ""}</li>
+                </Link>
+              </li>
+
+              
+              <li className="nav-item">
+                <Link to={"/Newsfeeds"} className="nav-link  " href="#">
+                  <li> {token ? "News Feeds" : ""}</li>
+                </Link>
+              </li>
+
+
               <li className="nav-item">
                 <Link to={"/resume"} className="nav-link  " href="#">
                   <li> {token ? "Create Resume" : ""}</li>
                 </Link>
               </li>
+          
 
               <li className="nav-item">
                 <Link to={"/chatroom"} className="nav-link  " href="#">

@@ -9,6 +9,7 @@ import Availableplatform from './platformavailable'
 import Aboutapplication from './Applicationavailable'
 import Nav from '../../Config/Navigation'
 import Footer from '../../Components/Footer'
+import JobPostModal from '../../Components/Postjobmodal'
 
 
 function Homepage() {
@@ -23,6 +24,7 @@ function Homepage() {
       <Availablejobs/>
       <Availableplatform/>
       <Aboutapplication/>
+      <JobPostModal/>
       <Footer/>
     </div>
   )

@@ -5,15 +5,17 @@ import Jobcontent from './JobContent'
 import Jobborder from './jobTopborder'
 import './Style.css'
 import Jobheader from './Jobsheader'
+import BorderPremium from '../Premiumpage/Borderpremiumpage'
 
 function Jobspage() {
   return (
     <div>
-      <Nav/>
-      <Jobborder/>
-      <Jobheader/>
-      <Jobcontent/>
-      <Footer/>
+      <Nav />
+      {/* <Jobborder/> */}
+      <BorderPremium />
+      <Jobheader />
+      <Jobcontent />
+      <Footer />
     </div>
   )
 }

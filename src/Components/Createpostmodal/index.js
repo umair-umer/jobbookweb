@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 import './createpostmodal.css'
 import axios from 'axios';
-
+import { baseurl } from '../../Config/utilites';
+import { useParams } from 'react-router-dom';
 
 const ModalComponent = ({ isOpen, toggleModal, jobDetails }) => {
-
+   const jobId = localStorage.getItem("currentJobId")
+  console.log("jobID===>>",jobId)
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
   const [apiData, setApiData] = useState(null);
@@ -12,9 +14,16 @@ const ModalComponent = ({ isOpen, toggleModal, jobDetails }) => {
   const handleFetchData = async () => {
     setLoading(true);
     setApiError(null);
+    const token = localStorage.getItem("token"); // Retrieve the token from local storage
     try {
-      const response = await axios.get('https://app.jobbooks.app/api/v1/jobbook/company/home/applications/659850af4fb74958cf767926');
+      const response = await axios.get(`${baseurl}/company/home/applications/${jobId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}` // Use the token in the Authorization header
+        }
+      });
+      
       setApiData(response.data);
+      console.log("data==>>>", response.data);
     } catch (error) {
       setApiError(error.toString());
     } finally {
@@ -26,10 +35,10 @@ const ModalComponent = ({ isOpen, toggleModal, jobDetails }) => {
 
   // Directly destructure the necessary counts from jobDetails.data for cleaner access
   const { totalCount, pendingCount, shortlistCount, rejectedCount } = jobDetails?.data || {
-    totalCount: 0,
-    pendingCount: 0,
-    shortlistCount: 0,
-    rejectedCount: 0,
+    totalCount: totalCount,
+    pendingCount: pendingCount,
+    shortlistCount: shortlistCount,
+    rejectedCount: rejectedCount,
   };
 
   return (
@@ -45,7 +54,7 @@ const ModalComponent = ({ isOpen, toggleModal, jobDetails }) => {
             </button>
           </div>
           <div className="modal-body">
-            <div className='styling-box-button-count'>
+            <div className='styling-box-button-count' onClick={handleFetchData}>
               <p>Pending Applications </p>
               <p>{pendingCount}</p>
             </div>

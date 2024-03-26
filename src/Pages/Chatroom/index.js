@@ -25,6 +25,7 @@ function SendMessageForm() {
     const [room, setRoom] = useState({})
     const [roomId, setRoomId] = useState()
     const [receiverId, setReceiverId] = useState()
+    const [isChatHistoryVisible, setIsChatHistoryVisible] = useState(false);
 
 
 
@@ -69,6 +70,7 @@ function SendMessageForm() {
 
         const token = localStorage.getItem("token");
         setIsLoading(true);
+        setIsChatHistoryVisible(true); 
         try {
             const response = await axios.get(`${baseurl}/chat/history/${chatId}`, {
                 headers: {
@@ -94,6 +96,7 @@ function SendMessageForm() {
     };
 
 
+    const messagesEndRef = useRef(null);
 
 
     // Sokets functions
@@ -102,6 +105,9 @@ function SendMessageForm() {
         socket.on('RECEIVE_MESSAGE', function (data) {
             setChatHistory([...chatHistory, data]);
         });
+
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
     }, [chatHistory]);
 
     const sendMessage = (e) => {
@@ -149,6 +155,8 @@ function SendMessageForm() {
                                                     {item.participants.filter(i => i._id !== userId)[0].name}
                                                 </p>
                                             </div>
+                                            <hr/>
+
                                         </li>
                                     </ul>
                                 ))}
@@ -168,19 +176,22 @@ function SendMessageForm() {
 
                                             return (
                                                 <div key={index} className={`message-item my-2 ${messageClass}`}>
-                                                    {isCurrentUser == msg.senderId._id ? <img src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
-                                                        : <img src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar mx-2" />}
-
-                                                    <p className={isCurrentUser ? 'text-end' : 'text-start'}>{msg?.content}</p>
+                                                  {isCurrentUser == msg.senderId._id ? (
+                                                    <img src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
+                                                  ) : (
+                                                    <img src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar mx-2" />
+                                                  )}
+                                                  <p className={isCurrentUser ? 'text-end' : 'text-start'}>{msg?.content}</p>
                                                 </div>
-                                            );
-                                        }) ?? <div>No messages found</div>}
+                                              );
+                                            }) ?? <div>No messages found</div>}
+                                            <div ref={messagesEndRef} /> {/* Invisible element to auto-scroll to */}
                                     </div>
 
 
                                 </div>
-                                <div style={{position:"sticky", bottom:"0"}}>
-                                    <div>
+                                {isChatHistoryVisible && ( // Conditionally render based on isChatHistoryVisible
+                                    <div style={{position:"sticky", bottom:"0"}}>
                                         <form className="message-form" onSubmit={sendMessage}>
                                             <input
                                                 type="text"
@@ -191,7 +202,7 @@ function SendMessageForm() {
                                             <button type="submit">Send</button>
                                         </form>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>

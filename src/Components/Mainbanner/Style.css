@@ -215,7 +215,17 @@
     border: solid 1px #69ece1;
     border-radius: 10px;
   }
+  .reversing-banner {
+    flex-direction: column-reverse;
+  }
+  .minus-topping-banner{
+    margin-top: 40px;
+  }
+  .home_bnr_img {
+    width: 40% !important;
 }
+}
+
 
 .banerlogo img {
   animation: animName 5s linear infinite;

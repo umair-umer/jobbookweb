@@ -20,7 +20,7 @@ function TalentNav() {
     const fetchNotifications = () => {
         const token = localStorage.getItem('token');
         console.log("Token retrieved", token);
-        fetch(`${baseurl}/talent/home/notifications`, {
+        fetch(`${baseurl}/company/home/notifications`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -108,12 +108,12 @@ function TalentNav() {
                             <li className="nav-item">
                                 <Link to={"/companyhomepage"}
                                     className="nav-link" aria-current="page" href="#">
-                                    Home
+                                    Forums
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <Link to={'/comapnytrainingpage'} className="nav-link" href="#">
-                                    Training
+                                News feeds
                                 </Link>
                             </li>
                             <li className="nav-item">
