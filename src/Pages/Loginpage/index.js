@@ -132,9 +132,10 @@ function Loginfrompage() {
                     <h6 className="card-title me-3">
                      Do not have an account?
                     </h6>
-                    <Link to={"/"}>
+                    <Link to={"/signup"}>
                     <button className="btn btn-outline-success " style={{borderRadius:"20px"}}>
-                      SINGUP
+                      {/* SINGUP */}
+                      Sign up
                     </button>
                     </Link>
                   </div>

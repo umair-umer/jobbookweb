@@ -197,7 +197,8 @@ function Signupfrompage() {
                     </h6>
                     <Link to={"/login"}>
                       <button className="btn btn-outline-success popular btn-no-border">
-                        SINGIN
+                        {/* SINGIN */}
+                        Sign in
                       </button>
                     </Link>
                   </div>

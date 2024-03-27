@@ -4,6 +4,7 @@ import './JobPostForm.css';
 import TalentNav from '../../Config/Telantnavbar';
 import Footer from '../Footer';
 import axios from 'axios';
+import { baseurl } from '../../Config/utilites';
 
 
 
@@ -85,9 +86,7 @@ const JobPostForm = () => {
     const formData = new FormData();
   
     // Append form data from state variables
-    formData.append('type', employmentType); // Ensure 'employmentType' is defined
-  
-    // Other form data fields...
+    formData.append('employmentType', employmentType); 
     formData.append('location', location);
     formData.append('salMin', salary && salary.split('-')[0].trim());
     formData.append('salMax', salary && salary.split('-')[1].trim());
@@ -102,7 +101,7 @@ const JobPostForm = () => {
       console.log("Token:", token); // Check if token is retrieved correctly
       const response = await axios({
         method: 'post',
-        url: 'https://app.jobbooks.app/api/v1/jobbook/company/job/create',
+        url: `${baseurl}/company/job/create`,
         data: formData,
         headers: {
           Authorization: `Bearer ${token}`,

@@ -4,7 +4,7 @@ import LOGO from "../../Assests/logo.png";
 import SideImg from "../../Assests/signupimage.png";
 import Facebook from "../../Assests/facebook.png";
 import GOOGLE from "../../Assests/googleiconbtn.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { FacebookAuth, auth, googleAuthProvider } from "../../firebase";
@@ -12,14 +12,8 @@ import axios from "axios";
 import Loader from "../../Components/Loader";
 import { baseurl } from "../../Config/utilites";
 import { toast } from 'react-toastify';
-import { setUserType } from "../../store/actions/authActions";
-
-
 
 function Signupfromcompanypage() {
-  const location =useLocation();
-  const {type}=location.state || {};
-  console.log("type",setUserType);
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,6 +25,7 @@ function Signupfromcompanypage() {
   const [userDetails, setUserDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  
   const handleSignUp = async (event) => {
     event.preventDefault();
     if (isSigningUp) return;
@@ -49,7 +44,7 @@ function Signupfromcompanypage() {
     setIsLoading(true);
 
     try {
-      const data = { firstName: name, email: email, password: password ,role:type };
+      const data = { firstName: name, email: email, password: password };
       await axios.post(
         `${baseurl}/auth/signup`,
         data,
@@ -59,11 +54,10 @@ function Signupfromcompanypage() {
           },
           
         }
-        
       );
-     
-      toast.success("Register successful :)",data);
-      navigate("/companylogin", { state: { type: setUserType } });
+
+      toast.success("Register successfully ");
+      navigate("/login"); // Corrected navigation
     } catch (error) {
       toast.error(error);
       console.log("An error occurred during sign up.");
@@ -73,43 +67,43 @@ function Signupfromcompanypage() {
   };
 
   const handleGoogleSignIn = async () => {
-    // if (isSigningIn) return;
-    // setIsSigningIn(true);
+    if (isSigningIn) return;
+    setIsSigningIn(true);
 
-    // try {
-    //   const result = await signInWithPopup(auth, googleAuthProvider);
-    //   console.log("Firebase auth result:", result);
+    try {
+      const result = await signInWithPopup(auth, googleAuthProvider);
+      console.log("Firebase auth result:", result);
 
-    //   const user = result.user;
-    //   const token = user.idToken; 
+      const user = result.user;
+      const token = user.idToken; 
 
-    //   // Extract user details
-    //   const data = {
-    //     firstName: user.displayName,
-    //     email: user.email,
-    //     password: user.uid, // Consider security implications of using uid as password
-    //     phone: user.phoneNumber,
-    //   };
+      // Extract user details
+      const data = {
+        firstName: user.displayName,
+        email: user.email,
+        password: user.uid, // Consider security implications of using uid as password
+        phone: user.phoneNumber,
+      };
 
-    //   // Call your backend API to register the user
-    //   // Ensure that you're using the token obtained from Google for authorization
-    //   await axios.post(`${baseurl}/auth/signup/google`, data, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
+      // Call your backend API to register the user
+      // Ensure that you're using the token obtained from Google for authorization
+      await axios.post(`${baseurl}/auth/signup/google`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    //   alert("Register successful :)");
-    //   localStorage.setItem("token", token); // Store the Google token for later use
-    //   localStorage.setItem("user", JSON.stringify(data));
-    //   setUserDetails(data); // Update state with the new user details
-    //   navigate("/companylogin");
-    // }  catch (error) {
-    //   console.error("Error during sign up with Google:", error);
-    // }finally {
-    //   setIsSigningIn(false);
-    // }
+      alert("Register successful :)");
+      localStorage.setItem("token", token); // Store the Google token for later use
+      localStorage.setItem("user", JSON.stringify(data));
+      setUserDetails(data); // Update state with the new user details
+      // navigate("/home");
+    }  catch (error) {
+      console.error("Error during sign up with Google:", error);
+    }finally {
+      setIsSigningIn(false);
+    }
   };
 
   // const handleFacebookSignIn = async () => {
@@ -118,39 +112,39 @@ function Signupfromcompanypage() {
   // };
 
   const handleFacebookSignIn = async () => {
-    // const user = await FacebookAuth();
-    // console.log("facebook_user", user);
+    const user = await FacebookAuth();
+    console.log("facebook_user", user);
 
-    // try {
-    //   const result = await signInWithPopup(auth, FacebookAuth);
-    //   const user = result.user;
+    try {
+      const result = await signInWithPopup(auth, FacebookAuth);
+      const user = result.user;
 
-    //   // Extract user details
-    //   const data = {
-    //     firstName: user.displayName, // Assuming your backend expects a 'firstName'
-    //     email: user.email,
-    //     password: user.uid, // Consider how you handle passwords
-    //   };
+      // Extract user details
+      const data = {
+        firstName: user.displayName, // Assuming your backend expects a 'firstName'
+        email: user.email,
+        password: user.uid, // Consider how you handle passwords
+      };
 
-    //   // Call your backend API to register the user
-    //   await axios.post(`${baseurl}api/v1/jobbook/auth/signup`, data, {
-    //     headers: { "Content-Type": "application/json" },
-    //   });
+      // Call your backend API to register the user
+      await axios.post(`${baseurl}/auth/signup`, data, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-    //   alert("Register successful :)");
-    //   localStorage.setItem("token", user.accessToken);
-    //   localStorage.setItem("user", JSON.stringify(data));
-    //   setTimeout(() => {
-    //     setIsLoading(false); // Hide loader after successful sign-up
-    //     navigate("/login"); // Navigate to login page after successful sign-up
-    //   }, 2000);
+      alert("Register successful :)");
+      localStorage.setItem("token", user.accessToken);
+      localStorage.setItem("user", JSON.stringify(data));
+      setTimeout(() => {
+        setIsLoading(false); // Hide loader after successful sign-up
+        navigate("/companylogin"); // Navigate to login page after successful sign-up
+      }, 2000);
 
-    // } catch (error) {
-    //   console.error(error);
-    //   alert("An error occurred during sign up with Facebook.");
-    // } finally {
-    //   setIsSigningIn(false);
-    // }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred during sign up with Facebook.");
+    } finally {
+      setIsSigningIn(false);
+    }
   };
 
   const handleTogglePassword = () => {
@@ -158,13 +152,13 @@ function Signupfromcompanypage() {
   };
 
   return (
-    <div className="continer main-no-border mainconsignup">
-      <div className="container main-no-border mainDiv">
+    <div className="continer main-no-border mainconsignup p-0">
+      <div className="container main-no-border mainDiv p-0">
           {/* Loader component */}
           {isLoading && <Loader />} 
         <div className="container my-3">
           <div className="row" style={{ border: "none" }}>
-            <div className="col-sm-6 mb-3 mb-sm-0 card-no-border-radius main-no-box-shadow">
+            <div className="col-sm-6 mb-3 mb-sm-0 card-no-border-radius main-no-box-shadow p-0">
               <div
                 className="card card-no-border"
                 style={{
@@ -204,7 +198,8 @@ function Signupfromcompanypage() {
                     </h6>
                     <Link to={"/companylogin"}>
                       <button className="btn btn-outline-success popular btn-no-border">
-                        SINGIN
+                        {/* SINGIN */}
+                        Sign in
                       </button>
                     </Link>
                   </div>
@@ -318,8 +313,9 @@ function Signupfromcompanypage() {
                       />
                     </div>
                   </div>
+           
 
-                  <Link to={"/login"}>
+                  <Link to={"/companylogin"}>
                     <button
                       className="btn btn-outline-success mx-4 recent btn-no-border"
                       onClick={handleSignUp}

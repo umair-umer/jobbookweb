@@ -26,18 +26,19 @@ function Loginfromcompanypage() {
 
 
   const location = useLocation();
-  const { type } = location.state || {};
-  const { setType } = useContext(TypeContext);
-  const dispatch = useDispatch();
+  const userType = localStorage.getItem('userRole')
+  // // const { type } = location.state || {};
+  // // const { setType } = useContext(TypeContext);
+  // const dispatch = useDispatch();
 
   
-  useEffect(() => {
-    if (type) {
-      localStorage.setItem('userType', type); // Store type in localStorage
-      dispatch(setType(type)); // Update Redux store
-      setType(type); // If using context, set the type here as well
-    }
-  }, [type, dispatch, setType]);
+  // useEffect(() => {
+  //   if (type) {
+  //     localStorage.setItem('userType', type); // Store type in localStorage
+  //     dispatch(setType(type)); // Update Redux store
+  //     setType(type); // If using context, set the type here as well
+  //   }
+  // }, [type, dispatch, setType]);
 
 
   const handleLogin = async (e) => {
@@ -148,7 +149,7 @@ function Loginfromcompanypage() {
                     </h6>
                     <Link to={"/companysignup"}>
                     <button className="btn btn-outline-success"  style={{borderRadius:"20px"}}> 
-                      SINGUP
+                      Sign up
                     </button>
                     </Link>
                   </div>
