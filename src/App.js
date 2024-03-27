@@ -34,7 +34,8 @@ import Addnewsfeedscomponet from "./Components/AddNewFeed/index.js";
 import JobPostForm from "./Components/Jobpostform/index.js";
 import Newsforum from './Pages/Forumspage/index.js';
 import Newsfeeds from './Pages/NewsFeed/index.js';
-import Videocall from './Components/Videocallfeature/index.js';
+import VideoCall from './Components/Videocallfeature/index.js';
+
 
 const isAuthenticated = localStorage.getItem("token");
 // Assuming the userRole is stored in localStorage (Replace this with your actual logic)
@@ -52,6 +53,8 @@ function App() {
       <Route path="/companysignup" element={<Signupfromcompanypage />} />
       <Route path="/companylogin" element={<Loginfromcompanypage />} />
       <Route path="/chatroom" element={<SendMessageForm />} />
+      <Route path="/videocall" element={<VideoCall />} />
+
     </>
   );
 
@@ -86,7 +89,6 @@ function App() {
       <Route path="/rejectedjobs" element={<Rejectedjobs />} />
       <Route path="/Addnewforums" element={<Addnewsfeed />} />
       <Route path="/Addnewfeeds" element={<Addnewsfeedscomponet />} />
-
       <Route path="/postjobform" element={<JobPostForm />} />
     </>
   ) : null;

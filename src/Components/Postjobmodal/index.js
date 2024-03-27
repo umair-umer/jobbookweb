@@ -22,9 +22,7 @@ function JobPostModal() {
      }
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          {/* <Modal.Title>Job Post</Modal.Title> */}
-        </Modal.Header>
+
         <Modal.Body>
         </Modal.Body>
         <Modal.Footer>
@@ -38,12 +36,6 @@ function JobPostModal() {
               <Link to={'/Addnewfeeds'}>
                 <Button variant="primary" >
                   Add To News Feeds
-                </Button>
-              </Link>
-
-              <Link to={'/videocall'}>
-                <Button variant="primary" >
-                 call video
                 </Button>
               </Link>
             </>

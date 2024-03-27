@@ -6,6 +6,7 @@ import Footer from '../../Components/Footer'
 import axios from 'axios';
 import io from 'socket.io-client';
 import Nav from '../../Config/Navigation';
+import { Link } from 'react-router-dom';
 
 //sokets states
 const socket = io('https://jobbookbackend.azurewebsites.net');
@@ -70,7 +71,7 @@ function SendMessageForm() {
 
         const token = localStorage.getItem("token");
         setIsLoading(true);
-        setIsChatHistoryVisible(true); 
+        setIsChatHistoryVisible(true);
         try {
             const response = await axios.get(`${baseurl}/chat/history/${chatId}`, {
                 headers: {
@@ -155,7 +156,7 @@ function SendMessageForm() {
                                                     {item.participants.filter(i => i._id !== userId)[0].name}
                                                 </p>
                                             </div>
-                                            <hr/>
+                                            <hr />
 
                                         </li>
                                     </ul>
@@ -164,7 +165,15 @@ function SendMessageForm() {
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <div className="card"> 
+                        <div className="card">
+                        {isChatHistoryVisible && (   
+                        <div className='header-for-topchat-btns'>
+                                <Link to={'/videocall'}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-camera-video-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z" />
+                                </svg>
+                                </Link>
+                            </div>  )}
                             <div className='chat-container chat-main-container'>
                                 <div className="message-list">
                                     <div className="chat-history">
@@ -176,22 +185,22 @@ function SendMessageForm() {
 
                                             return (
                                                 <div key={index} className={`message-item my-2 ${messageClass}`}>
-                                                  {isCurrentUser == msg.senderId._id ? (
-                                                    <img src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
-                                                  ) : (
-                                                    <img src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar mx-2" />
-                                                  )}
-                                                  <p className={isCurrentUser ? 'text-end' : 'text-start'}>{msg?.content}</p>
+                                                    {isCurrentUser == msg.senderId._id ? (
+                                                        <img src={`${Imagebaseurl}${msg.senderId.picture}`} alt="Sender Avatar" className="avatar" />
+                                                    ) : (
+                                                        <img src={`${Imagebaseurl}${msg.receiverId.picture}`} alt="Sender Avatar" className="avatar mx-2" />
+                                                    )}
+                                                    <p className={isCurrentUser ? 'text-end' : 'text-start'}>{msg?.content}</p>
                                                 </div>
-                                              );
-                                            }) ?? <div>No messages found</div>}
-                                            <div ref={messagesEndRef} /> {/* Invisible element to auto-scroll to */}
+                                            );
+                                        }) ?? <div>No messages found</div>}
+                                        <div ref={messagesEndRef} /> {/* Invisible element to auto-scroll to */}
                                     </div>
 
 
                                 </div>
                                 {isChatHistoryVisible && ( // Conditionally render based on isChatHistoryVisible
-                                    <div style={{position:"sticky", bottom:"0"}}>
+                                    <div style={{ position: "sticky", bottom: "0" }}>
                                         <form className="message-form" onSubmit={sendMessage}>
                                             <input
                                                 type="text"

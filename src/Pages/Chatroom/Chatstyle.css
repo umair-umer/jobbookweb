@@ -117,3 +117,13 @@ button:hover {
   width: fit-content;
   word-break: break-all;
 }
+.header-for-topchat-btns{
+  background: #5EBFB6;
+  padding: 10px 20px 10px;
+  margin-bottom: 20px;
+  text-align: end;
+}
+
+.header-for-topchat-btns svg{
+  color: #fff;
+}
